@@ -1,0 +1,311 @@
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+Daniels-MacBook-Air-2:~ danielorbach$ ps -p $$
+  PID TTY           TIME CMD
+20008 ttys004    0:00.02 -bash
+Daniels-MacBook-Air-2:~ danielorbach$ ps 
+  PID TTY           TIME CMD
+17316 ttys000    0:00.02 /bin/bash -l
+17321 ttys001    0:00.02 /bin/bash -l
+17430 ttys002    0:00.01 /bin/bash -l
+17592 ttys003    0:00.01 /bin/bash -l
+20008 ttys004    0:00.02 -bash
+Daniels-MacBook-Air-2:~ danielorbach$ ssh dorbach1@remote.cs.binghamton.edu
+Warning: Permanently added the ECDSA host key for IP address '128.226.114.200' to the list of known hosts.
+dorbach1@remote.cs.binghamton.edu's password: 
+Linux remote00 5.7.0-0.bpo.2-amd64 #1 SMP Debian 5.7.10-1~bpo10+1 (2020-07-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Oct  2 12:37:32 2020 from 149.125.65.37
+dorbach1@remote00:~$ ls
+CS120DanielOrbach  Downloads  Labs	Public	   Test2.c	 tmp
+Desktop		   Final      Music	Templates  Test2.c~	 Videos
+Documents	   Hw	      Pictures	Test2	   TestingFiles
+dorbach1@remote00:~$ cd tmp
+dorbach1@remote00:~/tmp$ ls
+lab0
+dorbach1@remote00:~/tmp$ cd lab0
+dorbach1@remote00:~/tmp/lab0$ script -a lab0.LOG
+Script started, file is lab0.LOG
+dorbach1@remote00:~/tmp/lab0$ ls ~/.ssh
+known_hosts
+dorbach1@remote00:~/tmp/lab0$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/dorbach1/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/dorbach1/.ssh/id_rsa
+Your public key has been saved in /home/dorbach1/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:obfGDuDNe3h7X+dDrJsut4BKzZu7C0UBhEOGivkxdWk dorbach1@remote00
+The key's randomart image is:
++---[RSA 3072]----+
+|    ooo+..       |
+|   .ooE   .      |
+|.... o. ..       |
+|o.o    ...       |
+| . o. . S.    .  |
+|  .. + o+..    o |
+|    . ++++ .  + .|
+|      o== +..+.+ |
+|      .+oO+.==o o|
++----[SHA256]-----+
+dorbach1@remote00:~/tmp/lab0$ 
+dorbach1@remote00:~/tmp/lab0$ ls ~/.ssh
+id_rsa	id_rsa.pub  known_hosts
+dorbach1@remote00:~/tmp/lab0$ client_loop: send disconnect: Broken pipe
+Daniels-MacBook-Air-2:~ danielorbach$ ssh-copy-id dorbach1@remote
+/usr/bin/ssh-copy-id: ERROR: No identities found
+Daniels-MacBook-Air-2:~ danielorbach$ ssh dorbach1@remote.cs.binghamton.edu
+dorbach1@remote.cs.binghamton.edu's password: 
+Linux remote05 5.7.0-0.bpo.2-amd64 #1 SMP Debian 5.7.10-1~bpo10+1 (2020-07-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Dec  1 14:59:35 2020 from 108.46.184.137
+dorbach1@remote05:~$ ssh-copy-id dorbach1@remote
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/dorbach1/.ssh/id_rsa.pub"
+The authenticity of host 'remote (128.226.114.205)' can't be established.
+ECDSA key fingerprint is SHA256:UEIh1TASIC96TC1hhxVbkVS0DrddNKHk7Q2nzgDCt+Y.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+dorbach1@remote's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'dorbach1@remote'"
+and check to make sure that only the key(s) you wanted were added.
+
+dorbach1@remote05:~$ ^C
+dorbach1@remote05:~$ exit
+logout
+Connection to remote.cs.binghamton.edu closed.
+Daniels-MacBook-Air-2:~ danielorbach$ ssh dorbach1@remote
+ssh: Could not resolve hostname remote: nodename nor servname provided, or not known
+Daniels-MacBook-Air-2:~ danielorbach$ ssh dorbach1@remote.cs.binghamton.edu
+Warning: Permanently added the ECDSA host key for IP address '128.226.114.201' to the list of known hosts.
+dorbach1@remote.cs.binghamton.edu's password: 
+Linux remote01 5.7.0-0.bpo.2-amd64 #1 SMP Debian 5.7.10-1~bpo10+1 (2020-07-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Wed Nov  4 10:52:10 2020 from 149.125.64.11
+dorbach1@remote01:~$ ssh dorbach1@remote
+Linux remote01 5.7.0-0.bpo.2-amd64 #1 SMP Debian 5.7.10-1~bpo10+1 (2020-07-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Aug 26 10:38:54 2021 from 149.125.50.192
+dorbach1@remote01:~$ exit
+logout
+Connection to remote closed.
+dorbach1@remote01:~$ ls
+CS120DanielOrbach  Downloads  Labs	Public	   Test2.c	 tmp
+Desktop		   Final      Music	Templates  Test2.c~	 Videos
+Documents	   Hw	      Pictures	Test2	   TestingFiles
+dorbach1@remote01:~$ cd Desktop
+dorbach1@remote01:~/Desktop$ ls
+cs140
+dorbach1@remote01:~/Desktop$ mkdir -p ~/projects
+dorbach1@remote01:~/Desktop$ cd ~/projects
+dorbach1@remote01:~/projects$ git clone ssh://user@remote.cs.binghamton.edu/~umrigar/git-repos/cs220.git
+Cloning into 'cs220'...
+user@remote.cs.binghamton.edu's password: 
+
+dorbach1@remote01:~/projects$ git clone ssh://dorbach1@remote.cs.binghamton.edu/~umrigar/git-repos/cs220.git
+Cloning into 'cs220'...
+remote: Enumerating objects: 305, done.
+remote: Counting objects: 100% (305/305), done.
+remote: Compressing objects: 100% (292/292), done.
+remote: Total 305 (delta 85), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (305/305), 1.68 MiB | 9.12 MiB/s, done.
+Resolving deltas: 100% (85/85), done.
+dorbach1@remote01:~/projects$ cd ~
+dorbach1@remote01:~$ ln -s projects/cs220 . 
+dorbach1@remote01:~$ ls
+CS120DanielOrbach  Documents  Hw     Pictures  Templates  Test2.c~	Videos
+cs220		   Downloads  Labs   projects  Test2	  TestingFiles
+Desktop		   Final      Music  Public    Test2.c	  tmp
+dorbach1@remote01:~$ cd cs220
+dorbach1@remote01:~/cs220$ ls
+announce.html  bin	  hw	      labs	README.md
+announce.umt   docs	  index.html  misc	slides
+assets	       exercises  index.umt   projects	umt.make
+dorbach1@remote01:~/cs220$ git log -5
+commit 0305b86713046c529f54718435c6af9c8c6cd675 (HEAD -> main, origin/main, origin/HEAD)
+Author: zerksis umrigar <umrigar@binghamton.edu>
+commit 0305b86713046c529f54718435c6af9c8c6cd675 (HEAD -> main, origin/main, orig
+in/HEAD)
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 22:07:50 2021 -0400
+
+    lab0 tweaks
+
+commit 0305b86713046c529f54718435c6af9c8c6cd675 (HEAD -> main, origin/main, orig
+in/HEAD)
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 22:07:50 2021 -0400
+
+    lab0 tweaks
+
+commit 9a6567527398cc3238ab38629a58873a55e7f3e7
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 16:19:48 2021 -0400
+
+    fix problems seen in class
+
+commit 34009f8097c9b3d4a61ec3376464a298c8db62a6
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 12:56:10 2021 -0400
+
+    grade assignment
+
+commit f471d336c1f9a89740b916f65e950fb51e8ce34e
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 02:44:39 2021 -0400
+
+    added more stuff
+
+commit 09716377740775b1c716fdd58955c1c86675fbbf
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 01:23:36 2021 -0400
+
+    tweaks
+dorbach1@remote01:~/cs220$ git log -3 labs/lab0.umt
+fatal: ambiguous argument 'labs/lab0.umt': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+dorbach1@remote01:~/cs220$ git log -3 -- labs/lab0.umt
+dorbach1@remote01:~/cs220$     $ git diff -r XXXXX labs/lab0.umt
+-bash: $: command not found
+dorbach1@remote01:~/cs220$ git diff -r XXXXX labs/lab0.umt
+fatal: ambiguous argument 'XXXXX': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+dorbach1@remote01:~/cs220$ git log -3 
+commit 0305b86713046c529f54718435c6af9c8c6cd675 (HEAD -> main, origin/main, origin/HEAD)
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 22:07:50 2021 -0400
+
+    lab0 tweaks
+
+commit 9a6567527398cc3238ab38629a58873a55e7f3e7
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 16:19:48 2021 -0400
+
+    fix problems seen in class
+
+commit 34009f8097c9b3d4a61ec3376464a298c8db62a6
+Author: zerksis umrigar <umrigar@binghamton.edu>
+Date:   Wed Aug 25 12:56:10 2021 -0400
+
+    grade assignment
+dorbach1@remote01:~/cs220$ git diff -r 0305b86 labs/lab0.umt
+fatal: ambiguous argument 'labs/lab0.umt': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+dorbach1@remote01:~/cs220$ ls
+announce.html  bin	  hw	      labs	README.md
+announce.umt   docs	  index.html  misc	slides
+assets	       exercises  index.umt   projects	umt.make
+dorbach1@remote01:~/cs220$ cd labs
+dorbach1@remote01:~/cs220/labs$ ls
+index.html  index.umt  lab0  working
+dorbach1@remote01:~/cs220/labs$ cd lab0
+dorbach1@remote01:~/cs220/labs/lab0$ ls
+lab0  lab0.html  lab0.pdf  lab0.umt
+dorbach1@remote01:~/cs220/labs/lab0$ cd ..
+dorbach1@remote01:~/cs220/labs$ cd ..
+dorbach1@remote01:~/cs220$ git diff -r 0305b86 labs/lab0/lab0.umt
+dorbach1@remote01:~/cs220$ vi ~/.profile
+dorbach1@remote01:~/cs220$ vi ~/.profile
+dorbach1@remote01:~/cs220$ vi ~/.bashrc
+dorbach1@remote01:~/cs220$ cat ~/.ssh/id_rsa.pub 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDH5ARM42R00Nm/jXzoLas+oK3bun8WPksViK8UJmY2baHSWbUlOU9I4Nz/NPOS0b6VCh2rF+JSInmJFoLWC/HnACYYAllEUUTZMlDbJpK+82yd2aMIU1XfJfWg7f8FWsfXBxOmhpQpZcVwhghmwzu/MMNdAjCxIvHC7ZQSuw7aFBp5XZS7tpYJPGPdcg3I9m87wrwi8pbJWt0TkBmO/jy3LH60m2xtrkegyuwI/RWdf3OE7Y+z5QLQoutM+EYLAnieiZ2qDr6UZdFLUicf9C7zJzLwvYlZdE5OiPEZNUL7LjJv6U3/c+3di9wOg/wGcSABWagDmMDjjea4mFbTcscAYcg1KAdu7Rj2Vm6VHyCDlKd7ETTh6gpCIWBrw+1R8+i0IXr+mP19iQrs9/i7CDcRnQRrvOJzXxkpLoZywcuYsRoViFuFz5Kgm+x5ELRQzetfHKKyiyZ6ka1HVgv/67l+MNISo3QTgcrESpCCHVEn4Dyz136Ac6ggljA1etT3wa0= dorbach1@remote00
+dorbach1@remote01:~/cs220$ cat ~/.ssh/id_rsa.pub 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDH5ARM42R00Nm/jXzoLas+oK3bun8WPksViK8UJmY2baHSWbUlOU9I4Nz/NPOS0b6VCh2rF+JSInmJFoLWC/HnACYYAllEUUTZMlDbJpK+82yd2aMIU1XfJfWg7f8FWsfXBxOmhpQpZcVwhghmwzu/MMNdAjCxIvHC7ZQSuw7aFBp5XZS7tpYJPGPdcg3I9m87wrwi8pbJWt0TkBmO/jy3LH60m2xtrkegyuwI/RWdf3OE7Y+z5QLQoutM+EYLAnieiZ2qDr6UZdFLUicf9C7zJzLwvYlZdE5OiPEZNUL7LjJv6U3/c+3di9wOg/wGcSABWagDmMDjjea4mFbTcscAYcg1KAdu7Rj2Vm6VHyCDlKd7ETTh6gpCIWBrw+1R8+i0IXr+mP19iQrs9/i7CDcRnQRrvOJzXxkpLoZywcuYsRoViFuFz5Kgm+x5ELRQzetfHKKyiyZ6ka1HVgv/67l+MNISo3QTgcrESpCCHVEn4Dyz136Ac6ggljA1etT3wa0= dorbach1@remote00
+dorbach1@remote01:~/cs220$ cd ..
+dorbach1@remote01:~$ ls
+CS120DanielOrbach  Documents  Hw     Pictures  Templates  Test2.c~	Videos
+cs220		   Downloads  Labs   projects  Test2	  TestingFiles
+Desktop		   Final      Music  Public    Test2.c	  tmp
+dorbach1@remote01:~$ cd projects
+dorbach1@remote01:~/projects$ git clone https://github.com/dorbach1/i220a.git
+Cloning into 'i220a'...
+fatal: unable to access 'https://github.com/dorbach1/i220a.git/': Failed sending HTTP2 data
+dorbach1@remote01:~/projects$ git clone git@github.com:dorbach1/i220a.git
+Cloning into 'i220a'...
+The authenticity of host 'github.com (140.82.113.4)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com,140.82.113.4' (RSA) to the list of known hosts.
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (4/4), done.
+dorbach1@remote01:~/projects$ cd ~
+dorbach1@remote01:~$ ln -s ~/projects/i220? .
+dorbach1@remote01:~$ l
+-bash: l: command not found
+dorbach1@remote01:~$ ls
+CS120DanielOrbach  Documents  Hw     Music     Public	  Test2.c	tmp
+cs220		   Downloads  i220a  Pictures  Templates  Test2.c~	Videos
+Desktop		   Final      Labs   projects  Test2	  TestingFiles
+dorbach1@remote01:~$ cd i220a
+dorbach1@remote01:~/i220a$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+dorbach1@remote01:~/i220a$ ls -dl ~/cs220 ~/i220a
+lrwxrwxrwx 1 dorbach1 dorbach1 14 Aug 26 10:42 /home/dorbach1/cs220 -> projects/cs220
+lrwxrwxrwx 1 dorbach1 dorbach1 29 Aug 26 11:11 /home/dorbach1/i220a -> /home/dorbach1/projects/i220a
+dorbach1@remote01:~/i220a$ ls -l ~/.ssh ~/cs220 ~/i220a
+lrwxrwxrwx 1 dorbach1 dorbach1 14 Aug 26 10:42 /home/dorbach1/cs220 -> projects/cs220
+lrwxrwxrwx 1 dorbach1 dorbach1 29 Aug 26 11:11 /home/dorbach1/i220a -> /home/dorbach1/projects/i220a
+
+/home/dorbach1/.ssh:
+total 16
+-rw------- 1 dorbach1 dorbach1  571 Aug 26 10:38 authorized_keys
+-rw------- 1 dorbach1 dorbach1 2602 Aug 26 10:27 id_rsa
+-rw-r----- 1 dorbach1 dorbach1  571 Aug 26 10:27 id_rsa.pub
+-rw-r--r-- 1 dorbach1 dorbach1 1994 Aug 26 11:11 known_hosts
+dorbach1@remote01:~/i220a$ cd ~/i220a
+dorbach1@remote01:~/i220a$ git checkout -b lab0
+Switched to a new branch 'lab0'
+dorbach1@remote01:~/i220a$ mkdir -p submit
+dorbach1@remote01:~/i220a$ logout
+Connection to remote.cs.binghamton.edu closed.
+Daniels-MacBook-Air-2:~ danielorbach$ ssh dorbach1@remote.cs.binghamton.edu
+dorbach1@remote.cs.binghamton.edu's password: 
+Linux remote01 5.7.0-0.bpo.2-amd64 #1 SMP Debian 5.7.10-1~bpo10+1 (2020-07-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Aug 26 10:39:02 2021 from 128.226.114.201
+-bash: /home/umrigar/cs220/bin/student.profile: No such file or directory
+dorbach1@remote01:~$ cd temp
