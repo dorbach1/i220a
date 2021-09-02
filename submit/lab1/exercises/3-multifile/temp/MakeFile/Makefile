@@ -2,9 +2,7 @@ PROJECT = quadr
 SRC_FILES = main.c \
 	    quadr.c \
 	    test.data \
-	    README \
-	    Makefile \
-	    quadr.h 
+	    README 
 CFLAGS = -g -Wall -std=c18
 LDFLAGS = -lm
 
