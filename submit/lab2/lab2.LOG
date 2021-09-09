@@ -1775,4 +1775,31 @@ main([38;5;121mint[m argc, [38;5;121mconst[m [38;5;121mchar[m *argv[])
   [93mreturn[m [95m0[m;[49;173H24,16[9CTop"hello.c" 49L, 983C[24;16H[?25h[?25l[49;163H~@k[24;16H[49;163H   [24;15H[49;177H5[24;15H[?25h[?25l[49;163H~@k[24;15H[49;163H   [24;14H[49;177H4[24;14H[?25h[?25l[49;163H~@k[24;14H[49;163H   [24;13H[49;177H3[24;13H[?25h[?25l[49;163H~@k[24;13H[49;163H   [24;12H[49;177H2[24;12H[?25h[?25l[49;163H~@k[24;12H[49;163H   [24;13H[49;177H3[24;13H[?25h[?25l[49;163H~@k[24;13H[49;163H   [24;14H[49;177H4[24;14H[?25h[?25l[49;163H~@k[24;14H[49;163H   [24;15H[49;177H5[24;15H[?25h[?25l[49;163H~@k[24;15H[49;163H   [24;14H[49;177H4[24;14H[?25h[?25l[49;163H~@k[24;14H[49;163H   [24;13H[49;177H3[24;13H[?25h[?25l[49;163H~@k[24;13H[49;163H   [24;12H[49;177H2[24;12H[?25h[?25l[49;163H~@k[24;12H[49;163H   [24;13H[49;177H3[24;13H[?25h[?25l[49;163H~@k[24;13H[49;163H   [24;14H[49;177H4[24;14H[?25h[?25l[49;163H~@k[24;14H[49;163H   [24;15H[49;177H5[24;15H[?25h[?25l[49;163H~@k[24;15H[49;163H   [24;14H[49;177H4[24;14H[?25h[?25l[49;163H~@k[24;14H[49;163H   [24;13H[49;177H3[24;13H[?25h[?25l[49;163Hi[24;13H[49;163H [24;13H[49;1H[1m-- INSERT --[m[49;13H[K[49;173H24,13[9CTop[24;13H[?25h[?25l[49;177H4[24;14H[?25h[?25l[95m'0'[m;[24;16H[K[49;177H3[24;13H[?25h[?25l[38;5;224m'\0'[m;[49;177H4[24;14H[?25h[49;1H[K[24;13H[?25l[49;163H^[[24;13H[49;163H  [24;14H[49;173H24,13[9CTop[24;13H[?25h[?25l[49;163H:[24;13H[49;163H[K[49;1H:[?2004h[?25hw[?25l[?25hq[?25l[?25h[?25l[?1006l[?1002l[?2004l"hello.c" 49L, 983C written[23;2t[23;1t[22;2t[22;1t[23;2t[23;1t
 [?2004l[?1l>[?25h[?1049l[23;0;0tdorbach1@remote02:~/i220a/submit/lab2/exercises/2-hello-upcase-args$ make hle[K[Kello
 cc -g -Wall -std=c18    hello.c   -o hello
-dorbach1@remote02:~/i220a/submit/lab2/exercises/2-hello-upcase-args$ /[K./hello Daniel[K[K[K[K[Kda[K[K[KdanielOrb
+dorbach1@remote02:~/i220a/submit/lab2/exercises/2-hello-upcase-args$ /[K./hello Daniel[K[K[K[K[Kda[K[K[KdanielOrbach danielOrbach
+Hello DanielOrbach
+Hello DanielOrbach
+dorbach1@remote02:~/i220a/submit/lab2/exercises/2-hello-upcase-args$ cd ..
+dorbach1@remote02:~/i220a/submit/lab2/exercises$ cd[K[Kls[K[Kcd ..
+dorbach1@remote02:~/i220a/submit/lab2$ git add .
+dorbach1@remote02:~/i220a/submit/lab2$ git commit -m "lab finished"
+[lab2 d87968b] lab finished
+ Committer: Daniel Orbach <dorbach1@cs.binghamton.edu>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 1780 insertions(+), 1 deletion(-)
+ create mode 100644 submit/lab2/lab2.LOG
+dorbach1@remote02:~/i220a/submit/lab2$ -d[K[Kls
+exercises  lab2.LOG
+dorbach1@remote02:~/i220a/submit/lab2$ exit
+
+Script done on 2021-09-09 11:31:26-04:00 [COMMAND_EXIT_CODE="0"]
