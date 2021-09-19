@@ -3,8 +3,17 @@
 
 #include <limits.h>  //for CHAR_BIT
 
+#ifndef BYTE_SIZE
+
 typedef unsigned char Byte;
-enum { BITS_PER_BYTE = CHAR_BIT }; //assume a power-of-2
+#define BYTE_SIZE 1
+
+#endif
+
+#include "tests.h"
+
+//assume a power-of-2
+enum { BITS_PER_BYTE = CHAR_BIT*sizeof(Byte) };
 
 /**
 Morse code binary encoding
@@ -75,12 +84,5 @@ int textToMorse(const Byte text[], unsigned nText, Byte morse[]);
  */
 int morseToText(const Byte morse[], unsigned nMorse, Byte text[]);
 
-
-
-/* Functions that need to be tested */ 
-unsigned byteBitMask(unsigned bitIndex);
-unsigned getLog2PowerOf2(unsigned powerOf2);
-unsigned getBitIndex(unsigned bitOffset);
-unsigned getOffset(unsigned bitOffset);
 
 #endif //ifndef morse_h_

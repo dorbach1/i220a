@@ -115,7 +115,7 @@ codeToChar(const char *code) {
  *  bits set to 0.  Note that bitIndex == 0 represents the MSB,
  *  bitIndex == 1 represents the next significant bit and so on.
  */
-unsigned
+static inline unsigned
 byteBitMask(unsigned bitIndex)
 {
 	unsigned char mask = ~0;
@@ -126,7 +126,7 @@ byteBitMask(unsigned bitIndex)
 }
 
 /** Given a power-of-2 powerOf2, return log2(powerOf2) */
-unsigned
+static inline unsigned
 getLog2PowerOf2(unsigned powerOf2)
 {
 	unsigned int counter = 0;
@@ -137,7 +137,7 @@ getLog2PowerOf2(unsigned powerOf2)
 }
 
 /** Given a bitOffset return the bitIndex part of the bitOffset. */
-unsigned
+static inline unsigned
 getBitIndex(unsigned bitOffset)
 {
  	unsigned int bitsToMask = getLog2PowerOf2(BITS_PER_BYTE);
@@ -146,7 +146,7 @@ getBitIndex(unsigned bitOffset)
 }
 
 /** Given a bitOffset return the byte offset part of the bitOffset */
-unsigned
+static inline unsigned
 getOffset(unsigned bitOffset)
 {
 	unsigned int bitsToPush = getLog2PowerOf2(BITS_PER_BYTE);
@@ -159,7 +159,9 @@ getOffset(unsigned bitOffset)
 static inline int
 getBitAtOffset(const Byte array[], unsigned bitOffset)
 {
-	return array[getOffset(bitOffset)][getBitIndex(bitOffset)];
+	Byte byte = array[getOffset(bitOffset)];
+	unsigned char  mask  = (~((~(byte & 0)) >> 1)) >> getBitIndex(bitOffset);
+	return byte & mask; 
 }
 
 /** Set bit selected by bitOffset in array to bit. */
