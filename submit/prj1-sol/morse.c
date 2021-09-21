@@ -160,16 +160,31 @@ static inline int
 getBitAtOffset(const Byte array[], unsigned bitOffset)
 {
 	Byte byte = array[getOffset(bitOffset)];
-	unsigned char  mask  = (~((~(byte & 0)) >> 1)) >> getBitIndex(bitOffset);
-	return byte & mask; 
+	unsigned char  mask  = ~0;
+	mask >>= 1;
+	mask = ~mask;
+	mask >>= getBitIndex(bitOffset);
+	if(byte & mask) return 1;
+	else return 0;  
 }
 
 /** Set bit selected by bitOffset in array to bit. */
 static inline void
 setBitAtOffset(Byte array[], unsigned bitOffset, unsigned bit)
 {
-  //TODO
-  return;
+ 	Byte byte = array[getOffset(bitOffset)];
+	unsigned char mask = ~0;
+	mask >>= 1;
+	mask = ~mask;
+	mask >>= getBitIndex(bitOffset);
+	if(bit){
+		byte |= mask;
+			
+	} else {
+		byte &= ~mask; 
+	}
+	array[getOffset(bitOffset)] = byte;
+ 	return;
 }
 
 /** Set count bits in array[] starting at bitOffset to bit.  Return
@@ -178,11 +193,54 @@ setBitAtOffset(Byte array[], unsigned bitOffset, unsigned bit)
 static inline unsigned
 setBitsAtOffset(Byte array[], unsigned bitOffset, unsigned bit, unsigned count)
 {
-  //TODO
-  return 0;
+	unsigned int i;
+	for(i = 0; i < count; i ++){
+		setBitAtOffset(array, bitOffset + i, bit);		
+	}
+	return bitOffset + i;
+}
+
+int writeDash(Byte array[], unsigned *bitOffset){
+	*bitOffset = setBitsAtOffset(array, *bitOffset,  1, 3);
+	return 0; 
+}
+
+int writeDot(Byte array[], unsigned *bitOffset){
+	*bitOffset = setBitsAtOffset(array, *bitOffset, 1, 1);
+	return 0; 
+}
+
+int writeSingleSpace(Byte array[], unsigned *bitOffset){
+	*bitOffset = setBitsAtOffset(array, *bitOffset, 0, 1); 
+	return 0;
+}
+
+int writeCharSpace(Byte array[], unsigned *bitOffset){
+	*bitOffset = setBitsAtOffset(array, *bitOffset, 0, 2);
+	return 0;
 }
 
 
+int writeWordSpace(Byte array[], unsigned *bitOffset){
+	*bitOffset = setBitsAtOffset(array, *bitOffset, 0, 4);
+	return 0;  
+}
+
+
+int writeChar(Byte array[], Byte letter , unsigned *bitOffset){
+	const char *code = charToCode(letter);
+	for(int i = 0; code[i] != '\0'; i++ ){
+		if(code[i] == '.'){
+			writeDot(array, bitOffset);
+		}
+		else{
+			writeDash(array, bitOffset);
+		}
+		writeSingleSpace(array, bitOffset); 
+	}
+	if(letter != '\0') writeCharSpace(array, bitOffset); 
+	return 0; 
+}
 /** Convert text[nText] into a binary encoding of morse code in
  *  morse[].  It is assumed that array morse[] is initially all zero
  *  and is large enough to represent the morse code for all characters
@@ -196,8 +254,24 @@ setBitsAtOffset(Byte array[], unsigned bitOffset, unsigned bit, unsigned count)
 int
 textToMorse(const Byte text[], unsigned nText, Byte morse[])
 {
-  //TODO
-  return 0;
+	unsigned int bitOffset = 0; 
+	int skipNextSpace = 1;
+	
+
+	//Looping through each char
+	for(int i = 0; i < nText; i++){
+		if(isalnum(text[i])){
+			writeChar(morse, text[i], &bitOffset);
+			skipNextSpace = 0; 
+		} else if(!skipNextSpace){
+			writeWordSpace(morse, &bitOffset);
+			skipNextSpace = 1; 	 
+		}
+	}
+	
+
+	writeChar(morse, '\0', &bitOffset); 
+	return (getBitIndex(bitOffset) == 0 ? getOffset(bitOffset): getOffset(bitOffset) + 1);
 }
 
 /** Return count of run of identical bits starting at bitOffset
@@ -206,10 +280,24 @@ textToMorse(const Byte text[], unsigned nText, Byte morse[])
 static inline unsigned
 runLength(const Byte bytes[], unsigned nBytes, unsigned bitOffset)
 {
-  //TODO
-  return 0;
-}
+	int i = 0; 
+	int cont = 1;
+	while(cont){
+		if(getBitAtOffset(bytes, bitOffset + i) == getBitAtOffset(bytes, bitOffset)){
+			i++;
+		} 
+		else{
+			cont = 0;
+		}
+		if(getOffset(bitOffset) >= nBytes){
+			
+			 cont = 0;
 
+		}
+	
+	}
+	return i;
+}
 
 /** Convert AR-prosign terminated binary Morse encoding in
  *  morse[nMorse] into text in text[].  It is assumed that array
@@ -219,9 +307,97 @@ runLength(const Byte bytes[], unsigned nBytes, unsigned bitOffset)
  *
  *  Returns count of number of bytes used within text[], < 0 on error.
  */
+
+void printCharCode(char code[],int  nCode){
+	for(int i = 0; i < nCode; i ++){
+		printf("[%c] ", code[i]);
+	}
+	printf("\n");
+}
+
+void printBits(const Byte morse[] ,int nMorse){
+	for(int i = 0; getOffset(i) < nMorse && getBitIndex(i) < BITS_PER_BYTE; i ++){
+		printf("%d", getBitAtOffset(morse, i)); 
+	}
+	printf("\n");
+}
+
+
 int
 morseToText(const Byte morse[], unsigned nMorse, Byte text[])
 {
-  //TODO
-  return 0;
+	//printBits(morse, nMorse);	
+	//Skipping Over Leading 0s 
+	unsigned int bitOffset = 0; 
+	if(!getBitAtOffset(morse, bitOffset)){ 
+		unsigned int skip = runLength(morse, nMorse, bitOffset);
+		bitOffset += skip; 
+	}
+	
+ 	//Initializing Array to hold the morsecode for  a charachter
+	int MAX_LENGTH = 5; 
+	char nextCode[5] = { 0 };
+	int codeIndex = 0; 
+	
+	//Initializing Pointer to be used to write chars to the text array 
+	int textIndex = 0; 
+
+	//while we are not past the last byte in the morse array 
+	while(getOffset(bitOffset) < nMorse){ 
+		//If Current Bit is a 1
+		if(getBitAtOffset(morse, bitOffset)){
+			int numOnes = runLength(morse, nMorse, bitOffset);
+			//printf("There are %d ones at Bit  %d\n",numOnes, bitOffset);
+			//printf("codeIndex is %d, at Bit %d \n", codeIndex, bitOffset);
+			if(numOnes == 1) nextCode[codeIndex] = '.';
+			else if(numOnes == 3) nextCode[codeIndex] = '-';
+			else return -1;
+			codeIndex ++;
+			bitOffset += numOnes; 
+			//printCharCode(nextCode, MAX_LENGTH); 
+		} 
+		//Else if Bit is a zero 
+		else {
+			int numSpaces = runLength(morse, nMorse, bitOffset);
+			char sym; 
+			switch(numSpaces){
+				case 7: 
+					sym = codeToChar(nextCode);
+					text[textIndex] = sym;
+					text[textIndex + 1] = ' ';
+					textIndex += 2 ;
+					for(codeIndex = codeIndex; codeIndex >= 0; codeIndex --){
+						nextCode[codeIndex] = 0; 
+					}
+					codeIndex ++; 
+					bitOffset += numSpaces; 
+					break; 
+				case 3:
+                                        //printCharCode(nextCode , MAX_LENGTH);
+                                        //printf("Sym : %c \n" , sym);
+					//Write Char and increment textIndex
+					sym = codeToChar(nextCode);
+					text[textIndex] = sym;
+					textIndex ++;
+					//Reset Array and Array Pointer to get Ready for new Char to come in 
+					for(codeIndex = codeIndex; codeIndex >= 0; codeIndex -- ){
+						nextCode[codeIndex] = 0; 
+					}
+					codeIndex++;
+					bitOffset += numSpaces;
+					break; 
+				case 1 :
+					//For all spaces we need to skip over them after 
+					bitOffset += numSpaces; 
+					break;
+				default:
+					return  textIndex; 
+			}
+		}
+	}
+
+	return ( textIndex ) ;
 }
+
+
+

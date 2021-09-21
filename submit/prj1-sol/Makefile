@@ -1,11 +1,17 @@
 #Testing File
 TFILE = morseTest
+PROJECT = morse-encode
+LDFLAGS = -lm
 
+
+morse-decode: $(PROJECT)
+	ln -s -f $< $@
+
+$(PROJECT): file-utils.o morse.o main.o 
+	$(CC) file-utils.o morse.o main.o $(LDFLAGS) -o $@
 
 morseTest: morse.o morseTest.o
-	gcc morse.o morseTest.o -lm -o $(TFILE) 
-
-morse.o: 
+	gcc morse.o morseTest.o $(LDFLAGS) -o $(TFILE) 
 
 depend: 
 	$(CC) -MM $(CPPFLAGS) *.c
