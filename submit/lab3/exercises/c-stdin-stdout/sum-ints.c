@@ -24,7 +24,7 @@ int
 main(int argc, const char *argv[])
 {
   if (argc != 2 && argc != 3) {
-    fprintf(stderr, "usage: %s IN_FILE|- [OUT_FILE]\n", argv[0]);
+    fprintf(stderr, "usage: %s IN_FILE|- [OUT_FILE|-]\n", argv[0]);
     exit(1);
   }
   const char *inName = argv[1];
@@ -34,7 +34,8 @@ main(int argc, const char *argv[])
     exit(1);
   }
 
-  FILE *out = argc < 3 ? stdout : fopen(argv[2], "w");
+ 
+  FILE *out = (argc < 3 || strcmp(argv[2], "-" ) == 0)  ? stdout : fopen(argv[2], "w");
   if (!out) {
     fprintf(stderr, "cannot write %s: %s\n", argv[2], strerror(errno));
     exit(1);
