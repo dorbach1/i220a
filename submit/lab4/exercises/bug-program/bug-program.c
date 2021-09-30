@@ -18,10 +18,12 @@ static KeyValueNode *
 add_key_value(KeyValueNode *keyValues, const char *k, int v)
 {
   //allocate storage for new KeyValue struct
-  KeyValueNode *kv = malloc(sizeof(KeyValueNode *));
+  //BUG 1 : sizeof(KeyValueNode * ) gives the size of a pointer
+  KeyValueNode *kv = malloc(sizeof(KeyValueNode ));
 
   //allocate storage for string pointed to by k
-  char *s = malloc(strlen(k));
+  //BUG 2 : strln(k) is not enough space to fit a string as it doesn't include space for the terminating null char
+  char *s = malloc(strlen(k) + 1);
 
   if (kv == NULL || s == NULL) { //check if allocations succeeded
     fprintf(stderr, "malloc failure: %s\n", strerror(errno));
@@ -42,9 +44,19 @@ static void
 free_key_values(KeyValueNode *keyValues)
 {
   //go thru chain of keyValues
-  for (KeyValueNode *p = keyValues; p != NULL; p = p->succ) {
-    free(p); //free KeyValue struct
+  //BUG 3 and 4 when freeing we must also free the actual string, free(p) will just get rid of the pointer, it will also get rid of the pointer to succ so we must get it before we free p
+  KeyValueNode *prev = keyValues;
+  KeyValueNode *p;
+  for (p = prev->succ; p != NULL; p = p->succ) {
+ 
+    
+    
+    free((void * ) prev-> key);
+    free(prev);
+    prev = p;
   }
+  free((void *) prev->key);
+  free(prev);
 }
 
 /** Make key-values for all the words in the first verse of Carroll's
