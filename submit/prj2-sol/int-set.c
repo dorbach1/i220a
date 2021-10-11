@@ -1,17 +1,31 @@
 #include "int-set.h"
 #include <stddef.h>
-
+#include <stdlib.h>
 /** Abstract data type for set of int's.  Note that sets do not allow
  *  duplicates.
  */
+typedef struct NodeStruct{
+	int value;
+	struct NodeStruct *succ; 
+} Node; 
+
+typedef struct {
+	int nElements;
+	Node dummy;
+} Header; 
+
 
 /** Return a new empty int-set.  Returns NULL on error with errno set.
  */
-void *newIntSet();
+//May need to be fixed
+void *newIntSet(){
+	return calloc(1, sizeof(Header));
+};
 
 /** Return # of elements in intSet */
 int nElementsIntSet(void *intSet){
-	return 0; 
+	Header *header = (Header *) intSet;
+	return header->nElements; 
 };
 
 /** Return non-zero iff intSet contains element. */
@@ -51,6 +65,13 @@ int intersectionIntSet(void *intSetA, void *intSetB){
 
 /** Free all resources used by previously created intSet. */
 void freeIntSet(void *intSet){
+	Header *header = (Header *) intSet;
+	Node *p1;
+	for(Node *p = header->dummy.succ; p != NULL; p = p1){
+		p1 = p->succ;
+		free(p);
+	}
+	free(header);
 	return; 
 }
 
