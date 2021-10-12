@@ -1,0 +1,293 @@
+Script started on 2021-10-12 10:08:12-04:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+bash: /home/umrigar/cs220/bin.student.rc: No such file or directory
+dorbach1@g7-26:~/i220a/submit/lab6$ ls
+exercises  lab6.LOG
+dorbach1@g7-26:~/i220a/submit/lab6$ cd exercises/
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ ls
+1  3		cookie-wrapper.h       full-example  Makefile
+2  another-one	feed-cookie-monster.c  gen-cookie    simple
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ ./gen-cookie
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ ;w
+bash: syntax error near unexpected token `;'
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ ls
+1  3		cookie-wrapper.h       full-example  Makefile
+2  another-one	feed-cookie-monster.c  gen-cookie    simple
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ ca[K[Kls --[Ka
+.   2		 .cookie		full-example  Makefile
+..  3		 cookie-wrapper.h	gen-cookie    simple
+1   another-one  feed-cookie-monster.c	.gitignore
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ cat ,[K.cookie
+0x8093
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ cd ex`[K[K[K[K full-example/
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ make -f ../Makefile
+gcc -g -Og -Wall -std=c18   -c -o feed-cookie-monster.o feed-cookie-monster.c
+gcc feed-cookie-monster.o cookie-wrapper.obj -o feed-cookie-monster
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ ls
+cookie-wrapper.h    feed-cookie-monster    feed-cookie-monster.o
+cookie-wrapper.obj  feed-cookie-monster.c
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ ./feed[K[K[K[K[K[Kls -a
+.   cookie-wrapper.h	feed-cookie-monster    feed-cookie-monster.o
+..  cookie-wrapper.obj	feed-cookie-monster.c
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ ./feed-cookie-monster [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kr
+Me want cookie!
+enter cookie unwrap key in hex: 9a03
+🥶 AARGH YUCK!!
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ [Kdorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ ==[K[K[Kdorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ [Kdorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ vo [K[Ki feed-coo[K[K[K[K[K[K[K[K[K[K[Kcd[K[Kcd ..
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ ls
+1  2  3  another-one  cookie-wrapper.h	feed-cookie-monster.c  full-example  gen-cookie  Makefile  simple
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ vi feed-cookie-mosn[K[Knster.c
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;33r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[33;1H"feed-cookie-monster.c" 47L, 994C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[95m#include [m[95m<errno.h>[m
+[95m#include [m[95m<stdio.h>[m
+[95m#include [m[95m<stdlib.h>[m
+[95m#include [m[95m<string.h>[m
+
+[95m#include [m[95m"cookie-wrapper.h"[m
+
+[95m#define COOKIE_FILE  [m[95m"../.cookie"[m
+
+[94mstatic[m [94mint[m getCookie() {
+  [94mFILE[m *cookieFile = fopen(COOKIE_FILE, [95m"r"[m);
+  [31mif[m (!cookieFile) {
+    fprintf([95mstderr[m, [95m"cannot read %s: %s\n"[m, COOKIE_FILE, strerror(errno));
+    exit([95m1[m);
+  }
+  [94mint[m cookie = -[95m1[m;
+  [94mint[m n = fscanf(cookieFile, [95m"0x%x"[m, &cookie);
+  fclose(cookieFile);
+  [31mif[m (n != [95m1[m) {
+    fprintf([95mstderr[m, [95m"unable to scan cookie file\n"[m);
+    exit([95m1[m);
+  }
+  [31mreturn[m cookie;
+}
+
+[94mstatic[m [94mint[m getUnwrapKey() {
+  [94mint[m key;
+  [94mint[m n = [95m0[m;
+  [31mwhile[m (n != [95m1[m) {
+    printf([95m"enter cookie unwrap key in hex: "[m);
+    fflush([95mstdout[m);
+    n = scanf([95m"%x"[m, &key);[33;119H1,1[11CTop]2;feed-cookie-monster.c (~/projects/i220a/submit/lab6/exercises) - VIM]1;feed-cookie-monster.c[1;1H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[?25l[33;119H2[2;1H[?25h[?25l[33;119H3[3;1H[?25h[?25l[33;119H4[4;1H[?25h[?25l[33;119H5,0-1[5;1H[?25h[?25l[33;119H6,1  [6;1H[?25h[?25l[33;119H7,0-1[7;1H[?25h[?25l[33;119H8,1  [8;1H[?25h[?25l[33;119H9,0-1[9;1H[?25h[?25l[33;119H10,1 [10;1H[?25h[?25l[33;120H1[11;1H[?25h[?25l[33;120H2[12;1H[?25h[?25l[33;120H3[13;1H[?25h[?25l[33;120H4[14;1H[?25h[?25l[33;120H5[15;1H[?25h[?25l[33;120H6[16;1H[?25h[?25l[33;120H7[17;1H[?25h[?25l[33;120H8[18;1H[?25h[?25l[33;120H9[19;1H[?25h[?25l[33;119H20[20;1H[?25h[?25l[33;120H1[21;1H[?25h[?25l[33;120H2[22;1H[?25h[?25l[33;120H3[23;1H[?25h[?25l[10;24H[106m{[24;1H}[m[33;120H4[24;1H[?25h[?25l[10;24H{[24;1H}[33;120H5,0-1[25;1H[?25h[?25l[33;120H6,1  [26;1H[?25h[?25l[33;120H7[27;1H[?25h[?25l[33;120H8[28;1H[?25h[?25l[33;120H9[29;1H[?25h[?25l[33;119H30[30;1H[?25h[?25l[33;120H1[31;1H[?25h[?25l[33;120H2[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3H}[33;1H[K[33;119H33,1[11C6%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3H[31mreturn[m key;[33;119H[K[33;119H34,1[10C13%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[23;27H[106m{[32;1H}[m[33;119H[K[33;119H35,1[10C20%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[22;27H{[31;1H}[33;119H[K[33;119H36,0-1[8C26%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[94mint[m main() {[33;119H[K[33;119H37,1[10C33%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[33;119H[K[33;119H38,0-1[8C40%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hprintf([95m"Me want cookie!\n"[m);[33;119H[K[33;119H39,1[10C46%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3H[94mconst[m [94mint[m cookie = getCookie();[33;119H[K[33;119H40,1[10C53%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3H[94mint[m wrapped = wrapCookie(cookie);[33;119H[K[33;119H41,1[10C60%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3H[94mint[m key = getUnwrapKey();[33;119H[K[33;119H42,1[10C66%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3H[94mint[m gotIt = unwrapCookie(wrapped, key) == cookie;[33;119H[K[33;119H43,1[10C73%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hprintf(gotIt ? [95m"😂[32;21H CHOMP!!! CHOMP!!!\n"[m : [95m"🥶[32;48H AARGH YUCK!!\n"[m);[33;119H[K[33;119H44,1[10C80%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[32;3H[31mreturn[m !!gotIt;[33;119H[K[33;119H45,1[10C86%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[33;119H[K[33;119H46,0-1[8C93%[32;1H[?25h[?25l[1;32r[32;1H
+[1;33r[22;12H[106m{[32;1H}[m[33;119H[K[33;119H47,1[10CBot[32;1H[?25h[?25l[22;12H{[32;1H}[33;120H6,0-1[31;1H[?25h[?25l[33;120H5,1  [30;1H[?25h[?25l[33;120H4[29;1H[?25h[?25l[33;120H3[28;1H[?25h[?25l[33;120H2[27;1H[?25h[?25l[33;120H1[26;1H[?25h[?25l[33;120H0[25;1H[?25h[?25l[33;119H39[24;1H[?25h[?25l[33;120H8,0-1[23;1H[?25h[?25l[33;120H7,1  [22;1H[?25h[?25l[33;120H6,0-1[21;1H[?25h[?25l[11;27H[106m{[20;1H}[m[33;120H5,1  [20;1H[?25h[?25l[11;27H{[20;1H}[33;120H6,0-1[21;1H[?25h[?25l[33;120H7,1  [22;1H[?25h[?25l[33;120H8,0-1[23;1H[?25h[?25l[33;120H9,1  [24;1H[?25h[?25l[33;119H40[25;1H[?25h[?25l[33;120H1[26;1H[?25h[?25l[33;120H2[27;1H[?25h[?25l[33;120H3[28;1H[?25h[?25l[33;120H4[29;1H[?25h[?25l[33;120H5[30;1H[?25h[?25l[33;120H6,0-1[31;1H[?25h[?25l[22;12H[106m{[32;1H}[m[33;120H7,1  [32;1H[?25h[?25l[22;12H{[32;1H}[33;120H6,0-1[31;1H[?25h[?25l[33;120H5,1  [30;1H[?25h[?25l[33;120H4[29;1H[?25h[?25l[33;120H3[28;1H[?25h[?25l[33;120H2[27;1H[?25h[?25l[33;120H1[26;1H[?25h[?25l[33;120H0[25;1H[?25h[?25l[33;119H39[24;1H[?25h[?25l[33;120H8,0-1[23;1H[?25h[?25l[33;120H7,1  [22;1H[?25h[?25l[33;120H6,0-1[21;1H[?25h[?25l[11;27H[106m{[20;1H}[m[33;120H5,1  [20;1H[?25h[?25l[11;27H{[20;1H}[33;120H4[19;1H[?25h[?25l[33;120H3[18;1H[?25h[?25l[33;120H2[17;1H[?25h[?25l[33;120H1[16;1H[?25h[?25l[33;120H0[15;1H[?25h[?25l[33;119H29[14;1H[?25h[?25l[33;120H8[13;1H[?25h[?25l[33;120H7[12;1H[?25h[?25l[33;120H6[11;1H[?25h[?25l[33;120H5,0-1[10;1H[?25h[?25l[33;120H4,1  [9;1H[?25h[?25l[33;120H3[8;1H[?25h[?25l[33;120H2[7;1H[?25h[?25l[33;120H1[6;1H[?25h[?25l[33;120H0[5;1H[?25h[?25l[33;119H19[4;1H[?25h[?25l[33;120H8[3;1H[?25h[?25l[33;120H7[2;1H[?25h[?25l[33;120H6[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;3H}[33;119H[K[33;119H15,1[10C93%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;5Hexit([95m1[m);[33;119H[K[33;119H14,1[10C86%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;5Hfprintf([95mstderr[m, [95m"cannot read %s: %s\n"[m, COOKIE_FILE, strerror(errno));[33;119H[K[33;119H13,1[10C80%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;3H[31mif[m (!cookieFile) {[33;119H[K[33;119H12,1[10C73%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;3H[94mFILE[m *cookieFile = fopen(COOKIE_FILE, [95m"r"[m);[33;119H[K[33;119H11,1[10C66%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;1H[94mstatic[m [94mint[m getCookie() {[33;119H[K[33;119H10,1[10C60%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[33;119H[K[33;119H9,0-1[9C53%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;1H[95m#define COOKIE_FILE  [m[95m"../.cookie"[m[33;119H[K[33;119H8,1[11C46%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[33;119H[K[33;119H7,0-1[9C40%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;1H[95m#include [m[95m"cookie-wrapper.h"[m[33;119H[K[33;119H6,1[11C33%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[33;119H[K[33;119H5,0-1[9C26%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;1H[95m#include [m[95m<string.h>[m[33;119H[K[33;119H4,1[11C20%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;1H[95m#include [m[95m<stdlib.h>[m[33;119H[K[33;119H3,1[11C13%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;1H[95m#include [m[95m<stdio.h>[m[33;119H[K[33;119H2,1[12C6%[1;1H[?25h[?25l[1;32r[1;1H[L[1;33r[1;1H[95m#include [m[95m<errno.h>[m[33;119H[K[33;119H1,1[11CTop[1;1H[?25h[?25l[33;119H[K[33;1H:[?2004h[?25hQ[?25l[?25h[?25l[93m[101mE492: Not an editor command: Q[m[88C1,1[11CTop[1;1H[?25h[?25l[33;1H[K[33;1H:[?2004h[?25hQ[?25l[?25h[?25l[33;2H[K[33;2H[?25hq[?25l[?25h[?25l[?2004l]2;Terminal - ]1;Terminal - [23;2t[23;1t[22;2t[22;1t[23;2t[23;1t[33;1H[K[33;1H[?2004l[?1l>[?25h[?1049l[23;0;0tdorbach1@g7-26:~/i220a/submit/lab6/exercises$ vi cookie-wrapper,.[K[K.h
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;33r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[33;1H"cookie-wrapper.h" 11L, 287C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[95m#ifndef COOKIE_WRAPPER_H_
+#define COOKIE_WRAPPER_H_[m
+
+[91m/** Return cookie wrapped in some opaque wrapper */[m
+[94mint[m wrapCookie([94mint[m cookie);
+
+[91m/** Given wrapped cookie, use key to unwrap it and return unwrapped value */[m
+[94mint[m unwrapCookie([94mint[m wrapped, [94mint[m key);
+
+
+[95m#endif[m [91m//ifndef COOKIE_WRAPPER_H_[m
+[94m~                                                                                                                                       [13;1H~                                                                                                                                       [14;1H~                                                                                                                                       [15;1H~                                                                                                                                       [16;1H~                                                                                                                                       [17;1H~                                                                                                                                       [18;1H~                                                                                                                                       [19;1H~                                                                                                                                       [20;1H~                                                                                                                                       [21;1H~                                                                                                                                       [22;1H~                                                                                                                                       [23;1H~                                                                                                                                       [24;1H~                                                                                                                                       [25;1H~                                                                                                                                       [26;1H~                                                                                                                                       [27;1H~                                                                                                                                       [28;1H~                                                                                                                                       [29;1H~                                                                                                                                       [30;1H~                                                                                                                                       [31;1H~                                                                                                                                       [32;1H~                                                                                                                                       [m[33;119H1,1[11CAll]2;cookie-wrapper.h (~/projects/i220a/submit/lab6/exercises) - VIM]1;cookie-wrapper.h[1;1H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[?25l[33;119H2[2;1H[?25h[?25l[33;119H3,0-1[3;1H[?25h[?25l[33;119H4,1  [4;1H[?25h[?25l[33;119H5[5;1H[?25h[?25l[33;119H6,0-1[6;1H[?25h[?25l[33;119H7,1  [7;1H[?25h[?25l[33;119H8[8;1H[?25h[?25l[33;119H9,0-1[9;1H[?25h[?25l[33;119H10,0-1[10;1H[?25h[?25l[33;120H1,1  [11;1H[?25h[?25l[33;1H[K[33;1H:[?2004h[?25hQ[?25l[?25h[?25l[33;2H[K[33;2H[?25hq[?25l[?25h[?25l[?2004l]2;Terminal - ]1;Terminal - [23;2t[23;1t[22;2t[22;1t[23;2t[23;1t[33;1H[K[33;1H[?2004l[?1l>[?25h[?1049l[23;0;0tdorbach1@g7-26:~/i220a/submit/lab6/exercises$ cd full-example/
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ ls
+cookie-wrapper.h  cookie-wrapper.obj  feed-cookie-monster  feed-cookie-monster.c  feed-cookie-monster.o
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ cd ..[K[K[K[K[Kv[Kvi cookie-wrapper.h
+[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;33r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[33;1H"cookie-wrapper.h" 11L, 287C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[95m#ifndef COOKIE_WRAPPER_H_
+#define COOKIE_WRAPPER_H_[m
+
+[91m/** Return cookie wrapped in some opaque wrapper */[m
+[94mint[m wrapCookie([94mint[m cookie);
+
+[91m/** Given wrapped cookie, use key to unwrap it and return unwrapped value */[m
+[94mint[m unwrapCookie([94mint[m wrapped, [94mint[m key);
+
+
+[95m#endif[m [91m//ifndef COOKIE_WRAPPER_H_[m
+[94m~                                                                                                                                       [13;1H~                                                                                                                                       [14;1H~                                                                                                                                       [15;1H~                                                                                                                                       [16;1H~                                                                                                                                       [17;1H~                                                                                                                                       [18;1H~                                                                                                                                       [19;1H~                                                                                                                                       [20;1H~                                                                                                                                       [21;1H~                                                                                                                                       [22;1H~                                                                                                                                       [23;1H~                                                                                                                                       [24;1H~                                                                                                                                       [25;1H~                                                                                                                                       [26;1H~                                                                                                                                       [27;1H~                                                                                                                                       [28;1H~                                                                                                                                       [29;1H~                                                                                                                                       [30;1H~                                                                                                                                       [31;1H~                                                                                                                                       [32;1H~                                                                                                                                       [m[33;119H1,1[11CAll]2;cookie-wrapper.h (~/projects/i220a/submit/lab6/exercises/full-example) - VIM]1;cookie-wrapper.h[1;1H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[?25l[33;1H[K[33;1H:[?2004h[?25hq[?25l[?25h[?25l[?2004l]2;Terminal - ]1;Terminal - [23;2t[23;1t[22;2t[22;1t[23;2t[23;1t[33;1H[K[33;1H[?2004l[?1l>[?25h[?1049l[23;0;0tdorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ d[Kcd ..
+dorbach1@g7-26:~/i220a/submit/lab6/exercises$ [Kdorbach1@g7-26:~/i220a/submit/lab6/exercises$ gdb[K[K[Kcd full-example/
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ ls
+cookie-wrapper.h  cookie-wrapper.obj  feed-cookie-monster  feed-cookie-monster.c  feed-cookie-monster.o
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ gdb feed-cookie-monster
+GNU gdb (Debian 8.2.1-2+b3) 8.2.1
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from feed-cookie-monster...done.
+(gdb) b unwrapCookie 
+Breakpoint 1 at 0x13e5
+(gdb) r
+Starting program: /import/linux/home1/dorbach1/projects/i220a/submit/lab6/exercises/full-example/feed-cookie-monster 
+Me want cookie!
+enter cookie unwrap key in hex: 77
+
+Breakpoint 1, 0x00005555555553e5 in unwrapCookie ()
+(gdb) dissas /m
+Undefined command: "dissas".  Try "help".
+(gdb) disas -[K/m
+Dump of assembler code for function unwrapCookie:
+=> 0x00005555555553e5 <+0>:	endbr64 
+   0x00005555555553e9 <+4>:	lea    (%rdi,%rdi,2),%eax
+   0x00005555555553ec <+7>:	and    $0xf,%eax
+   0x00005555555553ef <+10>:	lea    0x2cea(%rip),%rdx        # 0x5555555580e0 <vals>
+   0x00005555555553f6 <+17>:	add    (%rdx,%rax,4),%esi
+   0x00005555555553f9 <+20>:	mov    %esi,%eax
+   0x00005555555553fb <+22>:	retq   
+End of assembler dump.
+(gdb) disas
+Dump of assembler code for function unwrapCookie:
+=> 0x00005555555553e5 <+0>:	endbr64 
+   0x00005555555553e9 <+4>:	lea    (%rdi,%rdi,2),%eax
+   0x00005555555553ec <+7>:	and    $0xf,%eax
+   0x00005555555553ef <+10>:	lea    0x2cea(%rip),%rdx        # 0x5555555580e0 <vals>
+   0x00005555555553f6 <+17>:	add    (%rdx,%rax,4),%esi
+   0x00005555555553f9 <+20>:	mov    %esi,%eax
+   0x00005555555553fb <+22>:	retq   
+End of assembler dump.
+(gdb) [K(gdb) p /x 0x[K[K0x5555555580e0 0x2cea
+A syntax error in expression, near `0x2cea'.
+(gdb) p /x 0x5555555580e0 0x2cea+0x2cea 0x2cea
+$1 = 0x55555555adca
+(gdb) Quit
+(gdb) p /x 0x5555555580e0 + 0x2cea[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[14@0x5555555580e0[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[19@0x00005555555553f6 
+$2 = 0x5555555580e0
+(gdb) i reg $rdi
+rdi            0x9                 9
+(gdb) o redg[K[Kg $rsi[C[1P[1@i
+rsi            0x77                119
+(gdb) p ()i)n)t) )*) )[1P)0)x)[1P)[1P)[C)[K[1P)[1P)[1P)[1P)[1P)()[C)i))n))t)) ))*))[C )0x00005555555553f6 )[1P)[1P)[1P)[1P)8)0)e)[C[0] [K@16
+$3 = {0 <repeats 16 times>}
+(gdb) p ((int *) 0x000055555555580e)[0]@16=e)[0]@16[1Pe)[0]@16[1Pe)[0]@16[1Pe)[0]@16[1Pe)[0]@16[1Pe)[0]@16[C[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@16[1P)[0]@160x5555555580e0)[0]@16
+$4 = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3}
+(gdb) p ((int *) 0x5555555580e0)[0]@16[1P]@161]@161]@16000055555555580e)[0]@16[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[3P5555555580e0)[11]@16[C[C[K[K[K
+$5 = 15
+(gdb) p ((int *) 0x5555555580e0)[11][C[1@ [1@\[1@x
+Invalid character '\' in expression.
+(gdb) p \x ((int *) 0x5555555580e0)[11][1P[1@/
+$6 = 0xf
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3150340] will be killed.
+
+Quit anyway? (y or n) y
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ gdb feed-cookie-monsterls[Kcd full-example/..[Kvi cookie-wrapper.hls[Kcd full-example/ls[Kvi cookie-wrapper.hcd ..[Kfull-example/ls[Kgdb feed-cookie-monster=[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K./feed-cookie-monster 
+Me want cookie!
+enter cookie unwrap key in hex: 8084
+😂 CHOMP!!! CHOMP!!!
+dorbach1@g7-26:~/i220a/submit/lab6/exercises/full-example$ ./feed-cookie-monster gdb feed-cookie-monsterls[Kcd full-example/..[Kvi cookie-wrScript started on 2021-10-12 11:14:33-04:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="190" LINES="49"]
+bash: /home/umrigar/cs220/bin.student.rc: No such file or directory
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6$ cd exercises/
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6/exercises$ cd simple/
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6/exercises/simple$ gdb fu[K[Kfeed-cookie-monster
+GNU gdb (Debian 8.2.1-2+b3) 8.2.1
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from feed-cookie-monster...done.
+(gdb) b unwrapCookie 
+Breakpoint 1 at 0x13c3
+(gdb) r
+Starting program: /import/linux/home1/dorbach1/projects/i220a/submit/lab6/exercises/simple/feed-cookie-monster 
+Me want cookie!
+enter cookie unwrap key in hex: 10
+
+Breakpoint 1, 0x00005555555553c3 in unwrapCookie ()
+(gdb) dusas[K[K[K[Kiasa[K[K[Ksas
+Dump of assembler code for function unwrapCookie:
+=> 0x00005555555553c3 <+0>:	endbr64 
+   0x00005555555553c7 <+4>:	lea    (%rdi,%rsi,1),%eax
+   0x00005555555553ca <+7>:	retq   
+End of assembler dump.
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3158244] will be killed.
+
+Quit anyway? (y or n) y
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6/exercises/simple$ r[K./d[Kd[Kfeed-cookie-monster 808f
+Me want cookie!
+enter cookie unwrap key in hex: 808f
+😂 CHOMP!!! CHOMP!!!
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6/exercises/simple$ cd ../another-one/
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6/exercises/another-one$ gdb fed[Ked-cookie-monster
+GNU gdb (Debian 8.2.1-2+b3) 8.2.1
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from feed-cookie-monster...done.
+(gdb) b unwrapCookie 
+Breakpoint 1 at 0x1408
+(gdb) r
+Starting program: /import/linux/home1/dorbach1/projects/i220a/submit/lab6/exercises/another-one/feed-cookie-monster 
+Me want cookie!
+enter cookie unwrap key in hex: 10
+
+Breakpoint 1, 0x0000555555555408 in unwrapCookie ()
+(gdb) disas
+Dump of assembler code for function unwrapCookie:
+=> 0x0000555555555408 <+0>:	endbr64 
+   0x000055555555540c <+4>:	mov    %edi,%ecx
+   0x000055555555540e <+6>:	and    $0xf,%ecx
+   0x0000555555555411 <+9>:	and    $0x7,%edi
+   0x0000555555555414 <+12>:	lea    0x2cc5(%rip),%rax        # 0x5555555580e0 <vals2>
+   0x000055555555541b <+19>:	mov    (%rax,%rdi,4),%edx
+   0x000055555555541e <+22>:	lea    0x2cdb(%rip),%rax        # 0x555555558100 <vals1>
+   0x0000555555555425 <+29>:	add    (%rax,%rcx,4),%edx
+   0x0000555555555428 <+32>:	lea    (%rdx,%rdx,4),%eax
+   0x000055555555542b <+35>:	add    %esi,%eax
+   0x000055555555542d <+37>:	retq   
+End of assembler dump.
+(gdb) p /x ((int *) 0x555555558100)[1]
+$1 = 0xc
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3158340] will be killed.
+
+Quit anyway? (y or n) y
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6/exercises/another-one$ ./feed-cookie-monster 80843
+Me want cookie!
+enter cookie unwrap key in hex: 8- 043
+😂 CHOMP!!! CHOMP!!!
+dorbach1@g7-26:/import/linux/home1/dorbach1/i220a/submit/lab6/exercises/another-one$ exit
+
+Script done on 2021-10-12 11:16:13-04:00 [COMMAND_EXIT_CODE="1"]
