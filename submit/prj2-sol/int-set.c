@@ -15,6 +15,16 @@ typedef struct {
 } Header; 
 
 
+static Node *linkNodeAfter(void *p0,int value){
+	Node *newNode = malloc(sizeof(Node));
+	Node *p = (Node *)p0;
+	if(!newNode) return NULL; 
+	newNode->value = value;
+	newNode->succ = p->succ;
+	p->succ = newNode;
+	return newNode; 
+}
+
 /** Return a new empty int-set.  Returns NULL on error with errno set.
  */
 //May need to be fixed
@@ -30,6 +40,10 @@ int nElementsIntSet(void *intSet){
 
 /** Return non-zero iff intSet contains element. */
 int isInIntSet(void *intSet, int element){
+	Header *header = (Header *) intSet;
+	for(Node *p = header->dummy.succ; p != NULL; p = p->succ){
+		if(p->value == element) return 1; 
+	}
 	return 0; 
 }
 
@@ -38,6 +52,18 @@ int isInIntSet(void *intSet, int element){
  *  set.
  */
 int addIntSet(void *intSet, int element){
+	Header *header = (Header *) intSet;
+	Node *p = &header->dummy;
+	while(p->succ != NULL && p->succ->value < element){
+		p = p->succ; 
+	}
+	if(p->succ != NULL && p->succ->value == element){
+		return header->nElements; 
+	}
+
+	if(!linkNodeAfter(p, element)) return -1;
+	return ++header->nElements;
+	
 	return 0; 
 }
 
@@ -46,14 +72,46 @@ int addIntSet(void *intSet, int element){
  *  < 0 on error with errno set.
  */
 int addMultipleIntSet(void *intSet, const int elements[], int nElements){
-	return 0; 
+	int i;
+	for(i = 0 ; i < nElements - 1; i ++){
+		if(addIntSet(intSet, elements[i]) < 0)  return -1; 
+	} 
+	return addIntSet(intSet, elements[i]);
+	
 }
 
 /** Set intSetA to the union of intSetA and intSetB.  Return # of
  *  elements in the updated intSetA.  Returns < 0 on error.
  */
 int unionIntSet(void *intSetA, void *intSetB){
-	return 0; 
+	Header *aHeader = (Header *) intSetA;
+	Header *bHeader = (Header *) intSetB;
+	
+	Node *aP = &aHeader->dummy;
+	Node *bP = bHeader->dummy.succ;
+	
+	while(bP != NULL && aP->succ != NULL){
+		if(bP->value < aP->succ->value){
+			aP = linkNodeAfter(aP, bP->value);
+			if(aP == NULL) return -1;
+			++aHeader->nElements;
+			bP = bP->succ; 
+		}
+		else if(bP->value == aP->succ->value){
+			bP = bP->succ;
+			aP = aP->succ;  
+		}
+		else{
+			aP = aP->succ;
+		}	
+	}
+	while(bP != NULL){
+		aP = linkNodeAfter(aP, bP->value);
+		if(aP == NULL) return -1;
+		++aHeader->nElements;
+		bP = bP->succ; 
+	}
+	return aHeader->nElements; 
 }
 
 /** Set intSetA to the intersection of intSetA and intSetB.  Return #
@@ -79,18 +137,21 @@ void freeIntSet(void *intSet){
  *  is empty.
  */
 const void *newIntSetIterator(const void *intSet){
-	return NULL; 
+	Header *header = (Header *) intSet;
+	return header->dummy.succ;  
 }
 
 /** Return current element for intSetIterator. */
 int intSetIteratorElement(const void *intSetIterator){
-	return 0; 
+	Node *node = (Node *) intSetIterator;
+	return node->value; 
 }
 
 /** Step intSetIterator and return stepped iterator.  Return
  *  NULL if no more iterations are possible.
  */
 const void *stepIntSetIterator(const void *intSetIterator){
-	return NULL;
+	Node *node = (Node *) intSetIterator;
+	return node->succ;
 }
 
