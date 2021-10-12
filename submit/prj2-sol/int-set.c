@@ -1,6 +1,7 @@
 #include "int-set.h"
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 /** Abstract data type for set of int's.  Note that sets do not allow
  *  duplicates.
  */
@@ -15,13 +16,12 @@ typedef struct {
 } Header; 
 
 
-static Node *linkNodeAfter(void *p0,int value){
+static Node *linkNodeAfter(Node *p0, int value){
 	Node *newNode = malloc(sizeof(Node));
-	Node *p = (Node *)p0;
 	if(!newNode) return NULL; 
 	newNode->value = value;
-	newNode->succ = p->succ;
-	p->succ = newNode;
+	newNode->succ = p0->succ;
+	p0->succ = newNode;
 	return newNode; 
 }
 
@@ -73,10 +73,10 @@ int addIntSet(void *intSet, int element){
  */
 int addMultipleIntSet(void *intSet, const int elements[], int nElements){
 	int i;
-	for(i = 0 ; i < nElements - 1; i ++){
+	for(i = 0 ; i < nElements; i ++){
 		if(addIntSet(intSet, elements[i]) < 0)  return -1; 
 	} 
-	return addIntSet(intSet, elements[i]);
+	return ((Header * )intSet)->nElements;
 	
 }
 
@@ -87,17 +87,20 @@ int unionIntSet(void *intSetA, void *intSetB){
 	Header *aHeader = (Header *) intSetA;
 	Header *bHeader = (Header *) intSetB;
 	
-	Node *aP = &aHeader->dummy;
+	Node *aP = &(aHeader->dummy);
 	Node *bP = bHeader->dummy.succ;
 	
-	while(bP != NULL && aP->succ != NULL){
-		if(bP->value < aP->succ->value){
-			aP = linkNodeAfter(aP, bP->value);
+	while(bP != NULL && aP != NULL  && aP->succ != NULL){
+		printf("ap current value %d bp current value %d \n", aP->value, bP->value);
+		int bV = bP->value;
+		int aV = aP->succ->value; 
+		if( bV < aV){
+			aP = linkNodeAfter(aP, bV);
 			if(aP == NULL) return -1;
-			++aHeader->nElements;
+			++(aHeader->nElements);
 			bP = bP->succ; 
 		}
-		else if(bP->value == aP->succ->value){
+		else if(bV == aV){
 			bP = bP->succ;
 			aP = aP->succ;  
 		}
@@ -105,10 +108,10 @@ int unionIntSet(void *intSetA, void *intSetB){
 			aP = aP->succ;
 		}	
 	}
-	while(bP != NULL){
+	while(bP != NULL && aP!=NULL){
 		aP = linkNodeAfter(aP, bP->value);
 		if(aP == NULL) return -1;
-		++aHeader->nElements;
+		++(aHeader->nElements);
 		bP = bP->succ; 
 	}
 	return aHeader->nElements; 
