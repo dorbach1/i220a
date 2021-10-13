@@ -16,6 +16,15 @@ typedef struct {
 } Header; 
 
 
+
+static int unlinkNodeAfter(Node *p){
+	if(!p->succ) return 0;
+	Node *next = p->succ->succ;
+	free(p->succ); 
+	p->succ = next; 
+	return 1; 
+}
+
 static Node *linkNodeAfter(Node *p0, int value){
 	Node *newNode = malloc(sizeof(Node));
 	if(!newNode) return NULL; 
@@ -121,7 +130,36 @@ int unionIntSet(void *intSetA, void *intSetB){
  *  of elements in the updated intSetA.  Returns < 0 on error.
  */
 int intersectionIntSet(void *intSetA, void *intSetB){
-	return 0; 
+	Header *aHeader = (Header *) intSetA;
+	Header *bHeader = (Header *) intSetB;
+
+	Node *aP = &aHeader->dummy;
+	Node *bP = bHeader->dummy.succ;
+
+
+	//if aP is large and bp is small we will have to clear out the rest of aP
+	// {1 5 7 9 11 113}  {2, 3, 7}
+	//if bP is large and aP is small everything works, maybe clear out aP
+	while(bP != NULL &&  aP->succ != NULL){
+		printf("Current a %d, Current b %d, num a %d \n", aP->succ->value, bP->value, aHeader->nElements);
+		if(bP->value < aP->succ->value){
+			bP = bP->succ;
+		}
+		else if(bP->value == aP->succ->value){
+			bP = bP->succ;
+			aP = aP->succ;
+		}
+		else {
+			unlinkNodeAfter(aP);
+			aHeader->nElements -= 1; 
+		} 
+	}
+	while(aP->succ != NULL){
+		unlinkNodeAfter(aP);
+		aHeader->nElements -= 1; 
+	}
+	
+	return aHeader->nElements;  
 }
 
 /** Free all resources used by previously created intSet. */

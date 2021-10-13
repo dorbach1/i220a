@@ -522,6 +522,45 @@ END_TEST
 
 
 //TODO: add more intersection tests.
+//Check end
+START_TEST(myTest1)
+{                   
+  const int elements1[] = {1, 2, 3, 4, 5, 6, 7, 8, 54};
+  const int nElements1 = sizeof(elements1)/sizeof(elements1[0]);  
+  const int elements2[] = { 33, 54, 53, 33, 53 };
+  const int nElements2 = sizeof(elements2)/sizeof(elements2[0]);
+  const int intersection[] = {54};
+  const int nIntersection = 1; 
+  intersectionTest(elements1, nElements1, elements2, nElements2, intersection, nIntersection);
+}
+END_TEST
+
+//Check beggining
+START_TEST(myTest2)
+{
+  const int elements1[] = {68, 72, 54, 99, 33, 33, 100};
+  const int nElements1 = sizeof(elements1)/sizeof(elements1[0]);
+  const int elements2[] = { 33, 54, 53, 33, 53 };
+  const int nElements2 = sizeof(elements2)/sizeof(elements2[0]);
+  const int intersection[] = {33, 54};
+  const int nIntersection = 2;
+  intersectionTest(elements1, nElements1, elements2, nElements2, intersection, nIntersection);
+}
+END_TEST
+
+
+
+
+//Check disjointed 
+START_TEST(myTest3)
+{
+  const int elements1[] = {1, 2, 3, 4, 62, 63};
+  const int nElements1 = sizeof(elements1)/sizeof(elements1[0]);
+  const int elements2[] = { 33, 54, 53, 33, 53 };
+  const int nElements2 = sizeof(elements2)/sizeof(elements2[0]);
+  intersectionTest(elements1, nElements1, elements2, nElements2, NULL, 0);
+}
+END_TEST
 
 
 static Suite *
@@ -532,7 +571,9 @@ intersectionIntSetSuite(void)
   tcase_add_test(intersectionTests, emptyEmptyIntersection);
   tcase_add_test(intersectionTests, emptyNonEmptyIntersection);
   //TODO: for each test added above tcase_add_test(intersectionTests, ...)
-
+  tcase_add_test(intersectionTests, myTest1);
+  tcase_add_test(intersectionTests, myTest2);
+  tcase_add_test(intersectionTests, myTest3); 
   suite_add_tcase(suite, intersectionTests);
   return suite;
 }
