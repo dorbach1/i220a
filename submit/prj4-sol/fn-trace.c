@@ -11,8 +11,37 @@
 enum { INIT_SIZE = 2 };
 
 struct FnsDataImpl {
-  //TODO
+  FnInfo *arr;
+  int length;
+  int size;
 };
+
+static inline bool is_ret(unsigned op);
+
+/*Initialized empty FnsData structure*/ 
+FnsData *initFnsData(){
+	FnInfo *fnArr = (FnInfo *) mallocChk(20 * sizeof(FnInfo));
+	FnsData *fnArray = (FnsData *) mallocChk(sizeof(FnsData));
+	if(!fnArray) return NULL;
+	fnArray->arr = fnArr;
+	fnArray->length = 0;
+	fnArray->size = 20; 
+	return fnArray;   
+}
+
+void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
+	if(fnArray->length == fnArray->size){
+		FnInfo *fnArr = (FnInfo *) reallocChk(fnArray->arr, fnArray->size * 2 * sizeof(FnInfo));
+		FnArray->arr = fnArr;
+		FnArray->size = fnArray->size * 2;
+	}
+
+	//TODO: Figure out how to index with a pointer and finish method
+	fnArray->arr[fnArray->length] = *fnInfo;
+	fnArray->length++;
+}
+
+
 
 /** Return pointer to opaque data structure containing collection of
  *  FnInfo's for functions which are callable directly or indirectly
@@ -21,8 +50,26 @@ struct FnsDataImpl {
 const FnsData *
 new_fns_data(void *rootFn)
 {
-  //TODO
-  return NULL;
+  	//Initializing pointer to instructions, datastorage, and decoder
+	Lde *decode = new_lde();
+	const unsigned char *p = (const unsigned char *)rootFn;
+	FnsData *fnArray = initFnsData();
+
+
+	while(!is_ret(*p)){
+		int length = get_op_length(decode, p);
+		
+		long l = (long) length; 
+		long op_mask = ~( -(1l<<(l * 8)) );
+  
+		printf("*rootFn: %lx\n",(* (long *)p) &  op_mask ); //printing out the operation
+        	printf("*rootFn length: %x\n", length);
+        	printf("is ret? %d \n", is_ret(*p));
+
+		p += length; 
+	}
+
+	return NULL;
 }
 
 /** Free all resources occupied by fnsData. fnsData must have been
@@ -54,6 +101,15 @@ next_fn_info(const FnsData *fnsData, const FnInfo *lastFnInfo)
   //TODO
   return NULL;
 }
+
+
+
+
+
+
+
+
+
 
 
 /** recognized opcodes for calls and returns */

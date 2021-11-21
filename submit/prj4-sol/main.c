@@ -51,12 +51,14 @@ get_module_fn(const char *module, const char *fn, void **handleP)
   return f;
 }
 
+#if 0
 /** Output result of calling function f module::fn() on out. */
 static void
 out_fn_call_result(FILE *out, const char *module, const char *fn, FnP f)
 {
   fprintf(out, "%s:%s() = %d\n", module, fn, f());
 }
+#endif
 
 /** For each function called directly or indirectly by f, print
  *  address of function (relative address if isRelative is true), the
@@ -107,7 +109,7 @@ main(int argc, const char *argv[]) {
   FnP f = get_module_fn(module, fn, &handle);
 
   FILE *out = stdout;
-  out_fn_call_result(out, module, fn, f);
+  //out_fn_call_result(out, module, fn, f);
   out_fn_trace(out, f, isRelative);
 
   dlclose(handle);

@@ -7,7 +7,7 @@ TARGET = fn-trace
 CFLAGS = -g -Wall -I $(COURSE_DIR)/include -Og -std=c18 -fPIC
 
 LDLIBS =  -l cs220 -lcapstone -ldl
-LDFLAGS = -L $(COURSE_DIR)/lib
+LDFLAGS = -L $(COURSE_DIR)/lib 
 
 OBJS = \
   fn-trace.o \
