@@ -29,6 +29,7 @@ FnsData *initFnsData(){
 	return fnArray;   
 }
 
+//Add element to FnsData
 void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
 	if(fnArray->length == fnArray->size){
 		FnInfo *fnArr = (FnInfo *) reallocChk(fnArray->arr, fnArray->size * 2 * sizeof(FnInfo));
@@ -40,6 +41,34 @@ void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
 	fnArray->arr[fnArray->length] = *fnInfo;
 	fnArray->length++;
 }
+
+
+//Check if the function has been seen yet in FnData
+int functionSeen(void); 
+
+//Increment the amount of in calls in a funciton
+static inline void incrementInCount(*FnInfo fn);
+
+static inline void incrementOutCalls(*FnInfo fn);
+
+//Recursive method
+void recursiveFnData(FnsData * fnArray, const unsigned char * function);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -72,6 +101,10 @@ new_fns_data(void *rootFn)
 	return NULL;
 }
 
+
+
+
+
 /** Free all resources occupied by fnsData. fnsData must have been
  *  returned by new_fns_data().  It is not ok to use to fnsData after
  *  this call.
@@ -81,6 +114,9 @@ free_fns_data(FnsData *fnsData)
 {
   //TODO
 }
+
+
+
 
 /** Iterate over all FnInfo's in fnsData.  Make initial call with NULL
  *  lastFnInfo.  Keep calling with return value as lastFnInfo, until
@@ -107,11 +143,6 @@ next_fn_info(const FnsData *fnsData, const FnInfo *lastFnInfo)
 
 
 
-
-
-
-
-
 /** recognized opcodes for calls and returns */
 enum {
   CALL_OP = 0xE8,    //used to identify an external call which is traced
@@ -129,5 +160,3 @@ static inline bool is_ret(unsigned op) {
     op == RET_NEAR_OP || op == RET_NEAR_WITH_POP_OP ||
     op == RET_FAR_OP || op == RET_FAR_WITH_POP_OP;
 }
-
-//TODO: add auxiliary functions
