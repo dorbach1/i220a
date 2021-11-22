@@ -33,8 +33,8 @@ FnsData *initFnsData(){
 void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
 	if(fnArray->length == fnArray->size){
 		FnInfo *fnArr = (FnInfo *) reallocChk(fnArray->arr, fnArray->size * 2 * sizeof(FnInfo));
-		FnArray->arr = fnArr;
-		FnArray->size = fnArray->size * 2;
+		fnArray->arr = fnArr;
+		fnArray->size = fnArray->size * 2;
 	}
 
 	//TODO: Figure out how to index with a pointer and finish method
@@ -43,13 +43,19 @@ void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
 }
 
 
+//Generate Function info
+
 //Check if the function has been seen yet in FnData
 int functionSeen(void); 
 
 //Increment the amount of in calls in a funciton
-static inline void incrementInCount(*FnInfo fn);
+static inline void incrementInCount(*FnInfo fn){
+	fn->nInCalls ++;
+};
 
-static inline void incrementOutCalls(*FnInfo fn);
+static inline void incrementOutCalls(*FnInfo fn){
+	fn->nOutCalls ++; 
+};
 
 //Recursive method
 void recursiveFnData(FnsData * fnArray, const unsigned char * function);
