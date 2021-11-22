@@ -43,10 +43,21 @@ void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
 }
 
 
-//Generate Function info
+//Generate Function info and add it to the FnData structure specified by fnArray
+int newFnEntry(FnsData *fnArray, const unsigned char *address){
+	FnInfo fnEntry = {address , 0, 1, 0};
+	addFnInfo(fnArray, fnEntry);
+	return 0;  	
+}
 
 //Check if the function has been seen yet in FnData
-int functionSeen(void); 
+//Return 0 if not seen or 1 if seen
+int functionSeen(FnsData *fnArray, const unsigned char *address){
+	for(int i = 0; i < fnArray->length ; i ++){
+		if(address == fnArray->arr[i].address) return 1; 
+	}
+	return 0; 
+} 
 
 //Increment the amount of in calls in a funciton
 static inline void incrementInCount(*FnInfo fn){
