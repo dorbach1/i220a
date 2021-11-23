@@ -117,13 +117,9 @@ void printFnData(FnsData  fnArray){
 
 
 
-
-
-
-
-
-
-
+int cmpFunction(const void * a, const void * b){
+	return (int)( long) (((FnInfo *) a )->address) - (long)(((FnInfo *) b)->address); 
+}
 
 
 
@@ -140,7 +136,8 @@ new_fns_data(void *rootFn)
 	unsigned char *p = (unsigned char *)rootFn;
 	FnsData *fnArray = initFnsData(); 
 	recursiveFnData(fnArray, p, decode);
-	printFnData(*fnArray);
+	qsort(fnArray->arr, fnArray->length, sizeof(fnArray->arr[0]) , cmpFunction);
+	//printFnData(*fnArray);
 	return fnArray; 
 }
 
@@ -181,9 +178,12 @@ next_fn_info(const FnsData *fnsData, const FnInfo *lastFnInfo)
 	if(lastFnInfo == NULL) return fnsData->arr; 
 	FnInfo *base = fnsData->arr;
 	long difference = (long) (lastFnInfo - base);
-	if(difference >= sizeof(FnInfo) * fnsData->length || difference < 0) return NULL;
-	FnInfo *ret =  sizeof(FnInfo) + lastFnInfo;
-	return ret; 
+/*
+	printf("Base %p\nlastFn %p\n", base, lastFnInfo);
+	printf("Difference %lx\nSize %lx\n", difference, sizeof(fnsData->arr[0])); 
+*/
+	if(difference >= fnsData->length) return NULL;
+	return &(fnsData->arr[difference + 1]); 
 }
 
 
