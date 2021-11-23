@@ -17,7 +17,7 @@ struct FnsDataImpl {
 };
 
 static inline bool is_ret(unsigned op);
-
+static inline bool is_call(unsigned op);
 /*Initialized empty FnsData structure*/ 
 FnsData *initFnsData(){
 	FnInfo *fnArr = (FnInfo *) mallocChk(20 * sizeof(FnInfo));
@@ -30,7 +30,7 @@ FnsData *initFnsData(){
 }
 
 //Add element to FnsData
-void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
+FnInfo *addFnInfo(FnsData *fnArray, FnInfo fnInfo){
 	if(fnArray->length == fnArray->size){
 		FnInfo *fnArr = (FnInfo *) reallocChk(fnArray->arr, fnArray->size * 2 * sizeof(FnInfo));
 		fnArray->arr = fnArr;
@@ -38,42 +38,81 @@ void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
 	}
 
 	//TODO: Figure out how to index with a pointer and finish method
-	fnArray->arr[fnArray->length] = *fnInfo;
+	fnArray->arr[fnArray->length] = fnInfo;
+	//printf("%p \n", fnInfo.address);
 	fnArray->length++;
+	return &(fnArray->arr[fnArray->length -1]);
 }
 
 
 //Generate Function info and add it to the FnData structure specified by fnArray
-int newFnEntry(FnsData *fnArray, const unsigned char *address){
+FnInfo *newFnEntry(FnsData *fnArray,unsigned char *address){
 	FnInfo fnEntry = {address , 0, 1, 0};
-	addFnInfo(fnArray, &fnEntry);
-	return 0;  	
+	return addFnInfo(fnArray, fnEntry);
 }
 
 //Check if the function has been seen yet in FnData
 //Return 0 if not seen or 1 if seen
-int functionSeen(FnsData *fnArray, const unsigned char *address){
+FnInfo *functionSeen(FnsData *fnArray, unsigned char *address){
 	for(int i = 0; i < fnArray->length ; i ++){
-		if(address == fnArray->arr[i].address) return 1; 
+		if(address == fnArray->arr[i].address) return &(fnArray->arr[i]); 
 	}
-	return 0; 
+	return NULL; 
 } 
 
 //Increment the amount of in calls in a funciton
-static inline void incrementInCount(FnInfo *fn){
+static inline void incrementInCalls(FnInfo *fn){
 	fn->nInCalls ++;
-};
+}
 
 static inline void incrementOutCalls(FnInfo *fn){
 	fn->nOutCalls ++; 
-};
+}
+
+static inline void incrementLength(FnInfo *fn, int length){
+	fn->length += length; 	
+}
 
 //Recursive method
-void recursiveFnData(FnsData * fnArray, const unsigned char * function);
+void recursiveFnData(FnsData * fnArray, unsigned char * function, Lde *decoder){
+	FnInfo *fn = functionSeen(fnArray, function);
+	if(fn != NULL){
+		incrementInCalls(fn);
+		return; 		
+	}
+	//printf("Current function: %p \n", function);
+	unsigned char *p = function; 
+	fn = newFnEntry(fnArray, function);
+	while(!is_ret(*p)){
+		int length = get_op_length(decoder,(const unsigned char *) p);
+		incrementLength(fn, length); 
+		if(is_call(*p)){
+			incrementOutCalls(fn); 
+			int offset = (int)(*(p + 1)) | ( ((int) *(p + 2)) << 8) |
+				    ( ((int)*(p+3)) << 16) | (((int)*(p+4))<< 24);	
+			unsigned char *nextFunc = p + length + offset; 
+			recursiveFnData(fnArray, nextFunc, decoder);  
+		}
+		p += length; 
+	}
+	incrementLength(fn, get_op_length(decoder, p)); 
+	return;
+	
+}
 
 
+void printFnInfo(FnInfo fnInfo){
+	printf("%p, %d, %d" , fnInfo.address, fnInfo.nInCalls, fnInfo.nOutCalls);
+}
 
 
+void printFnData(FnsData  fnArray){
+	for(int i = 0 ; i < fnArray.length ; i ++){
+		printFnInfo(fnArray.arr[i]);
+		printf("\n");
+	}
+
+}
 
 
 
@@ -98,24 +137,11 @@ new_fns_data(void *rootFn)
 {
   	//Initializing pointer to instructions, datastorage, and decoder
 	Lde *decode = new_lde();
-	const unsigned char *p = (const unsigned char *)rootFn;
-	FnsData *fnArray = initFnsData();
-
-
-	while(!is_ret(*p)){
-		int length = get_op_length(decode, p);
-		
-		long l = (long) length; 
-		long op_mask = ~( -(1l<<(l * 8)) );
-  
-		printf("%lx\n",(* (long *)p) &  op_mask ); //printing out the operation
-        	//printf("*rootFn length: %x\n", length);
-        	//printf("is ret? %d \n", is_ret(*p));
-
-		p += length; 
-	}
-
-	return NULL;
+	unsigned char *p = (unsigned char *)rootFn;
+	FnsData *fnArray = initFnsData(); 
+	recursiveFnData(fnArray, p, decode);
+	printFnData(*fnArray);
+	return fnArray; 
 }
 
 
@@ -129,7 +155,8 @@ new_fns_data(void *rootFn)
 void
 free_fns_data(FnsData *fnsData)
 {
-  //TODO
+  free(fnsData->arr);
+  free(fnsData); 
 }
 
 
@@ -151,8 +178,12 @@ free_fns_data(FnsData *fnsData)
 const FnInfo *
 next_fn_info(const FnsData *fnsData, const FnInfo *lastFnInfo)
 {
-  //TODO
-  return NULL;
+	if(lastFnInfo == NULL) return fnsData->arr; 
+	FnInfo *base = fnsData->arr;
+	long difference = (long) (lastFnInfo - base);
+	if(difference >= sizeof(FnInfo) * fnsData->length || difference < 0) return NULL;
+	FnInfo *ret =  sizeof(FnInfo) + lastFnInfo;
+	return ret; 
 }
 
 
