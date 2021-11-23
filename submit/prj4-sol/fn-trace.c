@@ -46,7 +46,7 @@ void addFnInfo(FnsData *fnArray, FnInfo *fnInfo){
 //Generate Function info and add it to the FnData structure specified by fnArray
 int newFnEntry(FnsData *fnArray, const unsigned char *address){
 	FnInfo fnEntry = {address , 0, 1, 0};
-	addFnInfo(fnArray, fnEntry);
+	addFnInfo(fnArray, &fnEntry);
 	return 0;  	
 }
 
@@ -60,11 +60,11 @@ int functionSeen(FnsData *fnArray, const unsigned char *address){
 } 
 
 //Increment the amount of in calls in a funciton
-static inline void incrementInCount(*FnInfo fn){
+static inline void incrementInCount(FnInfo *fn){
 	fn->nInCalls ++;
 };
 
-static inline void incrementOutCalls(*FnInfo fn){
+static inline void incrementOutCalls(FnInfo *fn){
 	fn->nOutCalls ++; 
 };
 
@@ -108,9 +108,9 @@ new_fns_data(void *rootFn)
 		long l = (long) length; 
 		long op_mask = ~( -(1l<<(l * 8)) );
   
-		printf("*rootFn: %lx\n",(* (long *)p) &  op_mask ); //printing out the operation
-        	printf("*rootFn length: %x\n", length);
-        	printf("is ret? %d \n", is_ret(*p));
+		printf("%lx\n",(* (long *)p) &  op_mask ); //printing out the operation
+        	//printf("*rootFn length: %x\n", length);
+        	//printf("is ret? %d \n", is_ret(*p));
 
 		p += length; 
 	}
