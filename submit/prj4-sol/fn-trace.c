@@ -21,12 +21,12 @@ static inline bool is_call(unsigned op);
 int getFnIndex(const FnsData* fnsData, const FnInfo*fn);
 /*Initialized empty FnsData structure*/ 
 FnsData *initFnsData(){
-	FnInfo *fnArr = (FnInfo *) mallocChk(30 * sizeof(FnInfo));
+	FnInfo *fnArr = (FnInfo *) mallocChk(10 * sizeof(FnInfo));
 	FnsData *fnArray = (FnsData *) mallocChk(sizeof(FnsData));
 	if(!fnArray) return NULL;
 	fnArray->arr = fnArr;
 	fnArray->length = 0;
-	fnArray->size = 30; 
+	fnArray->size = 10; 
 	return fnArray;   
 }
 
