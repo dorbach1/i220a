@@ -18,19 +18,20 @@ struct FnsDataImpl {
 
 static inline bool is_ret(unsigned op);
 static inline bool is_call(unsigned op);
+int getFnIndex(const FnsData* fnsData, const FnInfo*fn);
 /*Initialized empty FnsData structure*/ 
 FnsData *initFnsData(){
-	FnInfo *fnArr = (FnInfo *) mallocChk(20 * sizeof(FnInfo));
+	FnInfo *fnArr = (FnInfo *) mallocChk(30 * sizeof(FnInfo));
 	FnsData *fnArray = (FnsData *) mallocChk(sizeof(FnsData));
 	if(!fnArray) return NULL;
 	fnArray->arr = fnArr;
 	fnArray->length = 0;
-	fnArray->size = 20; 
+	fnArray->size = 30; 
 	return fnArray;   
 }
 
-//Add element to FnsData
-FnInfo *addFnInfo(FnsData *fnArray, FnInfo fnInfo){
+//Add element to FnsData, returns index of the element added
+int addFnInfo(FnsData *fnArray, FnInfo fnInfo){
 	if(fnArray->length == fnArray->size){
 		FnInfo *fnArr = (FnInfo *) reallocChk(fnArray->arr, fnArray->size * 2 * sizeof(FnInfo));
 		fnArray->arr = fnArr;
@@ -41,12 +42,12 @@ FnInfo *addFnInfo(FnsData *fnArray, FnInfo fnInfo){
 	fnArray->arr[fnArray->length] = fnInfo;
 	//printf("%p \n", fnInfo.address);
 	fnArray->length++;
-	return &(fnArray->arr[fnArray->length -1]);
+	return fnArray->length -1;
 }
 
 
 //Generate Function info and add it to the FnData structure specified by fnArray
-FnInfo *newFnEntry(FnsData *fnArray,unsigned char *address){
+int newFnEntry(FnsData *fnArray,unsigned char *address){
 	FnInfo fnEntry = {address , 0, 1, 0};
 	return addFnInfo(fnArray, fnEntry);
 }
@@ -80,14 +81,16 @@ void recursiveFnData(FnsData * fnArray, unsigned char * function, Lde *decoder){
 		incrementInCalls(fn);
 		return; 		
 	}
+
 	//printf("Current function: %p \n", function);
 	unsigned char *p = function; 
-	fn = newFnEntry(fnArray, function);
+	int fnIndex = newFnEntry(fnArray, function);
 	while(!is_ret(*p)){
 		int length = get_op_length(decoder,(const unsigned char *) p);
-		incrementLength(fn, length); 
+		incrementLength(&fnArray->arr[fnIndex], length); 
 		if(is_call(*p)){
-			incrementOutCalls(fn); 
+			//printf("Address: %p   Function %x\n",fn->address , getFnIndex(fnArray, fn));
+			incrementOutCalls(&fnArray->arr[fnIndex]); 
 			int offset = (int)(*(p + 1)) | ( ((int) *(p + 2)) << 8) |
 				    ( ((int)*(p+3)) << 16) | (((int)*(p+4))<< 24);	
 			unsigned char *nextFunc = p + length + offset; 
@@ -95,7 +98,7 @@ void recursiveFnData(FnsData * fnArray, unsigned char * function, Lde *decoder){
 		}
 		p += length; 
 	}
-	incrementLength(fn, get_op_length(decoder, p)); 
+	incrementLength(&fnArray->arr[fnIndex], get_op_length(decoder, p)); 
 	return;
 	
 }
@@ -137,7 +140,8 @@ new_fns_data(void *rootFn)
 	FnsData *fnArray = initFnsData(); 
 	recursiveFnData(fnArray, p, decode);
 	qsort(fnArray->arr, fnArray->length, sizeof(fnArray->arr[0]) , cmpFunction);
-	//printFnData(*fnArray);
+//	printFnData(*fnArray);
+	free_lde(decode);
 	return fnArray; 
 }
 
@@ -182,8 +186,15 @@ next_fn_info(const FnsData *fnsData, const FnInfo *lastFnInfo)
 	printf("Base %p\nlastFn %p\n", base, lastFnInfo);
 	printf("Difference %lx\nSize %lx\n", difference, sizeof(fnsData->arr[0])); 
 */
-	if(difference >= fnsData->length) return NULL;
+	if(difference >= fnsData->length - 1) return NULL;
 	return &(fnsData->arr[difference + 1]); 
+}
+
+//Gets index of function in dynamic array 
+int getFnIndex(const FnsData *fnsData, const FnInfo *fn){
+	FnInfo*base = fnsData->arr;
+	int difference = (int) (fn - base);
+	return difference; 
 }
 
 
