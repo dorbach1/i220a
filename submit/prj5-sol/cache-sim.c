@@ -73,6 +73,76 @@ Set * newSet(int numLines){
         return s;
 }
 
+//Replace most recent line in a set with a new line (pushing the other to be second)
+void setMostRecentLine(Set *s, LineNode *line){
+        if(line->prev == NULL){
+                return;
+        }
+        if(line->next == NULL){
+                s->last = line->prev;
+        }
+
+        //
+        line->prev->next = line->next;
+        line->next = s->first;
+        line->prev = NULL;
+        s->first = line;
+}
+
+//Returns most recent line used
+static inline LineNode *getMostRecetLine(Set *s){
+        return s->first;
+}
+
+//Returns least recent line used
+static inline LineNode *getLeastRecentLine(Set *s){
+        return s->last;
+}
+
+
+//Returns the tag associated with a line
+static inline unsigned long getTagBits(Line line){
+        return (line & ((~0lu) >> 1));
+}
+
+//Sets the tags of a given line
+static inline void setTagBits(Line *line, unsigned long tag){
+        tag = tag & ((~0lu) >> 1);
+        *line = *line & (~((~0lu) >> 1));
+        *line = *line + tag;
+}
+
+//Gets wether the data in this line is valid
+static inline int getValidBit(Line line){
+        return (line & (~((~0lu) >> 1))) ? 1 : 0;
+}
+
+//Sets wether the data in this line is valid 
+static inline void setValidBit(Line *line, unsigned int bit){
+        *line = *line & ((~0lu)>>1);
+        *line = *line | ((unsigned long)bit << (sizeof(long) * 8 - 1 ));
+}
+
+//finds line specified by tag
+LineNode *findLine(Set *s, unsigned long tag){
+        LineNode *p = s->first ;
+        while(p != NULL){
+                if(getTagBits(p->line) == tag) return p;
+                p = p->next;
+        }
+        return NULL;
+}
+
+//Finds the first empty line in the set
+LineNode *findEmpty(Set *s){
+        LineNode *p = s->first ;
+        while(p != NULL){
+                if(!getValidBit(p->line)) return p;
+                p = p->next;
+        }
+        return NULL;
+}
+
 
 
 
