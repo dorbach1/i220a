@@ -30,6 +30,8 @@ Set * newEmptySet(){
                 printf("Error allocating mem\n");
                 return NULL;
         }
+	first->next = NULL;
+	first->prev = NULL;
         first->line = 0;
         s->first = first;
         s->last = first; //This will remain the last line in the set untill it is hit 
@@ -153,15 +155,34 @@ LineNode *findEmpty(Set *s){
 CacheSim *
 new_cache_sim(const CacheParams *params)
 {
-  //TODO
-  return NULL;
+        CacheSim *cache  = malloc(sizeof(CacheSim));
+        if(cache == NULL){
+                printf("Malloc experienced an error");
+                return NULL;
+        }
+        cache->params = *params;
+        int numSets = (int) power(2, params->nSetBits);
+        int numLines = params->nLinesPerSet;
+
+        Set **sets = malloc( sizeof(Set *) * numSets);
+        for(int i = 0; i < numSets ; i++){
+                sets[i] = newSet(numLines);
+        };
+        cache->sets = sets;
+        return cache;  
 }
 
 /** Free all resources used by cache-simulation structure *cache */
 void
 free_cache_sim(CacheSim *cache)
 {
-  //TODO
+        Set **sets = cache->sets;
+        int numSets = (int) power(2, cache->params.nSetBits );
+        for(int i = 0; i < numSets ; i ++){
+                freeSet(sets[i]);
+        }
+        free(sets);
+        free(cache);
 }
 
 /** Return result for requesting addr from cache */
