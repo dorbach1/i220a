@@ -1,7 +1,7 @@
 #include "cache-sim.h"
 
 #include "memalloc.h"
-
+#include <stdio.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -198,11 +198,99 @@ free_cache_sim(CacheSim *cache)
         free(cache);
 }
 
+
+//Extracts set from a a address
+unsigned long extractSet(CacheParams params, MemAddr address){
+        unsigned long byte_bits  = params.nLineBits;
+        unsigned long set_bits = params.nSetBits;
+        unsigned long tag_bits = (sizeof(unsigned long) * 8) - byte_bits  - set_bits; //address may be smaller then a long
+        unsigned long set = address & ((~0lu) << byte_bits );
+        set = set &  ( (~0lu) >> ( (sizeof(unsigned long) * 8) - params.nMemAddrBits  ) );
+        set = set & ((~0lu) >> tag_bits);
+        set = set >> byte_bits ;
+        return set;
+}
+
+
+//Extracts tag from an adresss
+unsigned long extractTag(CacheParams params, MemAddr address){
+        unsigned long byte_bits  = params.nLineBits;
+        unsigned long set_bits = params.nSetBits;
+        unsigned long tag_bits = (sizeof(unsigned long) * 8) - byte_bits  - set_bits;
+        unsigned long tag = address & ~((~0lu) >> tag_bits);
+        tag = tag &  ( (~0lu) >> ( (sizeof(unsigned long) * 8) - params.nMemAddrBits  ) );
+        tag = tag >> (set_bits + byte_bits);
+        return tag;
+}
+
+//Fills in line with new data and returns the previous address that was stored there
+MemAddr fillLine(CacheParams params, unsigned long setIndex, unsigned long newTag, LineNode *line){
+        unsigned long byte_bits  = params.nLineBits;
+        unsigned long set_bits = params.nSetBits;
+        MemAddr add = getTagBits(line->line);
+        add = add << (byte_bits + set_bits);
+        add = add | (setIndex << byte_bits);
+        setTagBits(&line->line, newTag);
+        setValidBit(&line->line, 1);
+        return add;
+}
+
+LineNode *pickReplacement(CacheParams params, Set *s){
+        Replacement strat = params.replacement;
+        if(strat == LRU_R){
+                return s->last;
+        } else if(strat == MRU_R){
+                return s->first;
+        } else {
+                int setSize = params.nLinesPerSet;
+                int index = rand() % setSize;
+                LineNode *p = s->first;
+                for(int i =0; i < index && p != NULL; i++){
+                        p = p->next;
+                }
+                return p;
+        }
+
+
+}
+
+
+
+
+
 /** Return result for requesting addr from cache */
 CacheResult
 cache_sim_result(CacheSim *cache, MemAddr addr)
 {
-  CacheResult result = { 0, 0 };
-  //TODO
-  return result;
+	CacheResult result = { 0, 0 };
+	unsigned long setI = extractSet(cache->params , addr);
+	unsigned long tag = extractTag(cache->params, addr);
+	Set *set = cache->sets[setI]; 
+	LineNode *reqLine = findLine(set, tag);
+	if(reqLine != NULL){
+		setMostRecentLine(set, reqLine); 
+		result.status = CACHE_HIT;
+		return result;
+	}
+
+	LineNode *nextEmpty = findEmpty(set);
+	if(nextEmpty != NULL){
+		fillLine(cache->params , setI, tag, nextEmpty);
+		setMostRecentLine(set , nextEmpty);
+		result.status = CACHE_MISS_WITHOUT_REPLACE;
+		return result;
+	}
+	LineNode *toReplace = pickReplacement(cache->params, set);
+	MemAddr replaced = fillLine(cache->params, setI, tag, toReplace);
+	result.status = CACHE_MISS_WITH_REPLACE;
+	result.replaceAddr = replaced;
+	return result;
+
+	
+	
+	return result;
 }
+
+
+
+
