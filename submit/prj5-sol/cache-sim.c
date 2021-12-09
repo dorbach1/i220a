@@ -88,7 +88,8 @@ void setMostRecentLine(Set *s, LineNode *line){
         line->prev->next = line->next;
         line->next = s->first;
         line->prev = NULL;
-        s->first = line;
+        s->first->prev = line;
+	s->first = line;
 }
 
 //Returns most recent line used
@@ -282,6 +283,7 @@ cache_sim_result(CacheSim *cache, MemAddr addr)
 	}
 	LineNode *toReplace = pickReplacement(cache->params, set);
 	MemAddr replaced = fillLine(cache->params, setI, tag, toReplace);
+	setMostRecentLine(set, toReplace);
 	result.status = CACHE_MISS_WITH_REPLACE;
 	result.replaceAddr = replaced;
 	return result;
