@@ -145,6 +145,19 @@ LineNode *findEmpty(Set *s){
         return NULL;
 }
 
+int power(int base, int exp){
+        int ret = 1;
+        for(int i = 0; i < exp; i++){
+                ret *= base;
+        }
+        return ret;
+}
+
+typedef struct CacheSimImpl {
+        Set **sets;
+        CacheParams params;
+} CacheSim;
+
 
 
 
